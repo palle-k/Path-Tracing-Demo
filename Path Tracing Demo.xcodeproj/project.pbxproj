@@ -108,7 +108,7 @@
 		E664E38E1D52FF1E0032AACA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E664E3911D52FF1E0032AACA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E664E3931D52FF1E0032AACA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E664E39E1D52FF9B0032AACA /* PathTracingViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PathTracingViewer.swift; path = PathTracingTests/PathTracingViewer.swift; sourceTree = SOURCE_ROOT; };
+		E664E39E1D52FF9B0032AACA /* PathTracingViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PathTracingViewer.swift; path = PathTracing/PathTracingViewer.swift; sourceTree = SOURCE_ROOT; };
 		E664E3A01D5300390032AACA /* mesh2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mesh2.obj; sourceTree = "<group>"; };
 		E69258381D4EE4B100A77195 /* Shading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shading.swift; sourceTree = "<group>"; };
 		E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacePartitioning.swift; sourceTree = "<group>"; };
@@ -147,7 +147,8 @@
 				E64D25371D4D8C6000445C30 /* MatrixTests.swift */,
 				E64D25391D4D8C6000445C30 /* Info.plist */,
 			);
-			path = PathTracingTestsTests;
+			name = PathTracingTestsTests;
+			path = "Path Tracing Demo Tests";
 			sourceTree = "<group>";
 		};
 		E658FB6A1D4B879200C7628D = {
@@ -183,8 +184,7 @@
 				E658FB7C1D4B879300C7628D /* Main.storyboard */,
 				E658FB7F1D4B879300C7628D /* Info.plist */,
 			);
-			name = "Path Tracing Demo";
-			path = PathTracingTests;
+			path = "Path Tracing Demo";
 			sourceTree = "<group>";
 		};
 		E664E3861D52FF1D0032AACA /* PathTracing */ = {
