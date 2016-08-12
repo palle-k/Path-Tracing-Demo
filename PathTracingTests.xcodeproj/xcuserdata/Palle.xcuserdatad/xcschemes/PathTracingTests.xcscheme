@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E658FB721D4B879200C7628D"
-               BuildableName = "PathTracingTests.app"
-               BlueprintName = "PathTracingTests"
+               BuildableName = "Path Tracing Demo.app"
+               BlueprintName = "Path Tracing Demo"
                ReferencedContainer = "container:PathTracingTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,8 +44,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E658FB721D4B879200C7628D"
-            BuildableName = "PathTracingTests.app"
-            BlueprintName = "PathTracingTests"
+            BuildableName = "Path Tracing Demo.app"
+            BlueprintName = "Path Tracing Demo"
             ReferencedContainer = "container:PathTracingTests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -69,8 +69,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E658FB721D4B879200C7628D"
-            BuildableName = "PathTracingTests.app"
-            BlueprintName = "PathTracingTests"
+            BuildableName = "Path Tracing Demo.app"
+            BlueprintName = "Path Tracing Demo"
             ReferencedContainer = "container:PathTracingTests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -88,8 +88,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E658FB721D4B879200C7628D"
-            BuildableName = "PathTracingTests.app"
-            BlueprintName = "PathTracingTests"
+            BuildableName = "Path Tracing Demo.app"
+            BlueprintName = "Path Tracing Demo"
             ReferencedContainer = "container:PathTracingTests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

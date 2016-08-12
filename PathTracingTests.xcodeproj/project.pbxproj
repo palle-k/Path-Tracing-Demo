@@ -22,7 +22,6 @@
 		E64D25431D4D98EE00445C30 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D25411D4D98EE00445C30 /* Matrix.swift */; };
 		E658AC521D5DCD2100701C31 /* SceneEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658AC511D5DCD2100701C31 /* SceneEncoding.swift */; };
 		E658AC531D5DCD2100701C31 /* SceneEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658AC511D5DCD2100701C31 /* SceneEncoding.swift */; };
-		E658AC541D5DCD2100701C31 /* SceneEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658AC511D5DCD2100701C31 /* SceneEncoding.swift */; };
 		E658FB771D4B879300C7628D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB761D4B879300C7628D /* AppDelegate.swift */; };
 		E658FB791D4B879300C7628D /* RenderResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB781D4B879300C7628D /* RenderResultViewController.swift */; };
 		E658FB7B1D4B879300C7628D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E658FB7A1D4B879300C7628D /* Assets.xcassets */; };
@@ -52,24 +51,6 @@
 		E692583A1D4EE4B100A77195 /* Shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69258381D4EE4B100A77195 /* Shading.swift */; };
 		E692583C1D4EEDFD00A77195 /* SpacePartitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */; };
 		E692583D1D4EEDFD00A77195 /* SpacePartitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */; };
-		E6C9E2891D5D4F6A006326F3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6C9E2871D5D4F6A006326F3 /* Interface.storyboard */; };
-		E6C9E28B1D5D4F6A006326F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6C9E28A1D5D4F6A006326F3 /* Assets.xcassets */; };
-		E6C9E2921D5D4F6A006326F3 /* PathTracingWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E6C9E2911D5D4F6A006326F3 /* PathTracingWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E6C9E2971D5D4F6A006326F3 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9E2961D5D4F6A006326F3 /* InterfaceController.swift */; };
-		E6C9E2991D5D4F6A006326F3 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9E2981D5D4F6A006326F3 /* ExtensionDelegate.swift */; };
-		E6C9E29B1D5D4F6A006326F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6C9E29A1D5D4F6A006326F3 /* Assets.xcassets */; };
-		E6C9E29F1D5D4F6A006326F3 /* PathTracingWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E6C9E2851D5D4F6A006326F3 /* PathTracingWatch.app */; };
-		E6C9E2A81D5D4FE1006326F3 /* SpacePartitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */; };
-		E6C9E2A91D5D4FE6006326F3 /* Pathtracing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB871D4C245500C7628D /* Pathtracing.swift */; };
-		E6C9E2AA1D5D4FE9006326F3 /* Shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69258381D4EE4B100A77195 /* Shading.swift */; };
-		E6C9E2AB1D5D4FEB006326F3 /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F1B2D1D542CE2008BD216 /* Textures.swift */; };
-		E6C9E2AC1D5D4FF0006326F3 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61433111D4E3CCD00D0CF34 /* Objects.swift */; };
-		E6C9E2AD1D5D4FF2006326F3 /* MeshImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61433141D4E8B2D00D0CF34 /* MeshImport.swift */; };
-		E6C9E2AE1D5D4FF5006326F3 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D25411D4D98EE00445C30 /* Matrix.swift */; };
-		E6C9E2AF1D5D4FF7006326F3 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB851D4B87AF00C7628D /* Geometry.swift */; };
-		E6C9E2B01D5D4FFA006326F3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EC0881D5A436C0054C2F5 /* Extensions.swift */; };
-		E6C9E2B11D5D5007006326F3 /* mesh2.obj in Resources */ = {isa = PBXBuildFile; fileRef = E664E3A01D5300390032AACA /* mesh2.obj */; };
-		E6C9E2B21D5D5008006326F3 /* mesh2.obj in Resources */ = {isa = PBXBuildFile; fileRef = E664E3A01D5300390032AACA /* mesh2.obj */; };
 		E6F44A801D59855D00C2FAD2 /* ShaderChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F44A7E1D59855D00C2FAD2 /* ShaderChooserViewController.swift */; };
 		E6F44A831D59877700C2FAD2 /* ShaderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F44A821D59877700C2FAD2 /* ShaderEditorViewController.swift */; };
 /* End PBXBuildFile section */
@@ -82,41 +63,15 @@
 			remoteGlobalIDString = E658FB721D4B879200C7628D;
 			remoteInfo = PathTracingTests;
 		};
-		E6C9E2931D5D4F6A006326F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E658FB6B1D4B879200C7628D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E6C9E2901D5D4F6A006326F3;
-			remoteInfo = "PathTracingWatch Extension";
-		};
-		E6C9E29D1D5D4F6A006326F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E658FB6B1D4B879200C7628D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E6C9E2841D5D4F6A006326F3;
-			remoteInfo = PathTracingWatch;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E6C9E2A51D5D4F6A006326F3 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				E6C9E2921D5D4F6A006326F3 /* PathTracingWatch Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E6C9E2A71D5D4F6A006326F3 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				E6C9E29F1D5D4F6A006326F3 /* PathTracingWatch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,7 +88,8 @@
 		E64D25391D4D8C6000445C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E64D25411D4D98EE00445C30 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		E658AC511D5DCD2100701C31 /* SceneEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneEncoding.swift; sourceTree = "<group>"; };
-		E658FB731D4B879300C7628D /* PathTracingTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PathTracingTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E658AC551D5DED0300701C31 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		E658FB731D4B879300C7628D /* PathTracingTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PathTracingTests.app; path = "Path Tracing Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E658FB761D4B879300C7628D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E658FB781D4B879300C7628D /* RenderResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderResultViewController.swift; sourceTree = "<group>"; };
 		E658FB7A1D4B879300C7628D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,15 +112,6 @@
 		E664E3A01D5300390032AACA /* mesh2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mesh2.obj; sourceTree = "<group>"; };
 		E69258381D4EE4B100A77195 /* Shading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shading.swift; sourceTree = "<group>"; };
 		E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacePartitioning.swift; sourceTree = "<group>"; };
-		E6C9E2851D5D4F6A006326F3 /* PathTracingWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PathTracingWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6C9E2881D5D4F6A006326F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		E6C9E28A1D5D4F6A006326F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6C9E28C1D5D4F6A006326F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E6C9E2911D5D4F6A006326F3 /* PathTracingWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "PathTracingWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6C9E2961D5D4F6A006326F3 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
-		E6C9E2981D5D4F6A006326F3 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
-		E6C9E29A1D5D4F6A006326F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6C9E29C1D5D4F6A006326F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6F44A7E1D59855D00C2FAD2 /* ShaderChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderChooserViewController.swift; sourceTree = "<group>"; };
 		E6F44A821D59877700C2FAD2 /* ShaderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderEditorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,13 +138,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6C9E28E1D5D4F6A006326F3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -213,11 +153,10 @@
 		E658FB6A1D4B879200C7628D = {
 			isa = PBXGroup;
 			children = (
+				E658AC551D5DED0300701C31 /* .gitignore */,
 				E658FB751D4B879300C7628D /* PathTracingTests */,
 				E64D25361D4D8C6000445C30 /* PathTracingTestsTests */,
 				E664E3861D52FF1D0032AACA /* PathTracing */,
-				E6C9E2861D5D4F6A006326F3 /* PathTracingWatch */,
-				E6C9E2951D5D4F6A006326F3 /* PathTracingWatch Extension */,
 				E658FB741D4B879300C7628D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -228,8 +167,6 @@
 				E658FB731D4B879300C7628D /* PathTracingTests.app */,
 				E64D25351D4D8C6000445C30 /* PathTracingTestsTests.xctest */,
 				E664E3851D52FF1D0032AACA /* PathTracing.app */,
-				E6C9E2851D5D4F6A006326F3 /* PathTracingWatch.app */,
-				E6C9E2911D5D4F6A006326F3 /* PathTracingWatch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -293,27 +230,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		E6C9E2861D5D4F6A006326F3 /* PathTracingWatch */ = {
-			isa = PBXGroup;
-			children = (
-				E6C9E2871D5D4F6A006326F3 /* Interface.storyboard */,
-				E6C9E28A1D5D4F6A006326F3 /* Assets.xcassets */,
-				E6C9E28C1D5D4F6A006326F3 /* Info.plist */,
-			);
-			path = PathTracingWatch;
-			sourceTree = "<group>";
-		};
-		E6C9E2951D5D4F6A006326F3 /* PathTracingWatch Extension */ = {
-			isa = PBXGroup;
-			children = (
-				E6C9E2961D5D4F6A006326F3 /* InterfaceController.swift */,
-				E6C9E2981D5D4F6A006326F3 /* ExtensionDelegate.swift */,
-				E6C9E29A1D5D4F6A006326F3 /* Assets.xcassets */,
-				E6C9E29C1D5D4F6A006326F3 /* Info.plist */,
-			);
-			path = "PathTracingWatch Extension";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -335,9 +251,9 @@
 			productReference = E64D25351D4D8C6000445C30 /* PathTracingTestsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E658FB721D4B879200C7628D /* PathTracingTests */ = {
+		E658FB721D4B879200C7628D /* Path Tracing Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E658FB821D4B879300C7628D /* Build configuration list for PBXNativeTarget "PathTracingTests" */;
+			buildConfigurationList = E658FB821D4B879300C7628D /* Build configuration list for PBXNativeTarget "Path Tracing Demo" */;
 			buildPhases = (
 				E658FB6F1D4B879200C7628D /* Sources */,
 				E658FB701D4B879200C7628D /* Frameworks */,
@@ -347,7 +263,7 @@
 			);
 			dependencies = (
 			);
-			name = PathTracingTests;
+			name = "Path Tracing Demo";
 			productName = PathTracingTests;
 			productReference = E658FB731D4B879300C7628D /* PathTracingTests.app */;
 			productType = "com.apple.product-type.application";
@@ -364,46 +280,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				E6C9E29E1D5D4F6A006326F3 /* PBXTargetDependency */,
 			);
 			name = PathTracing;
 			productName = PathTracing;
 			productReference = E664E3851D52FF1D0032AACA /* PathTracing.app */;
 			productType = "com.apple.product-type.application";
-		};
-		E6C9E2841D5D4F6A006326F3 /* PathTracingWatch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E6C9E2A61D5D4F6A006326F3 /* Build configuration list for PBXNativeTarget "PathTracingWatch" */;
-			buildPhases = (
-				E6C9E2831D5D4F6A006326F3 /* Resources */,
-				E6C9E2A51D5D4F6A006326F3 /* Embed App Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E6C9E2941D5D4F6A006326F3 /* PBXTargetDependency */,
-			);
-			name = PathTracingWatch;
-			productName = PathTracingWatch;
-			productReference = E6C9E2851D5D4F6A006326F3 /* PathTracingWatch.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		E6C9E2901D5D4F6A006326F3 /* PathTracingWatch Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E6C9E2A41D5D4F6A006326F3 /* Build configuration list for PBXNativeTarget "PathTracingWatch Extension" */;
-			buildPhases = (
-				E6C9E28D1D5D4F6A006326F3 /* Sources */,
-				E6C9E28E1D5D4F6A006326F3 /* Frameworks */,
-				E6C9E28F1D5D4F6A006326F3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "PathTracingWatch Extension";
-			productName = "PathTracingWatch Extension";
-			productReference = E6C9E2911D5D4F6A006326F3 /* PathTracingWatch Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -431,16 +312,6 @@
 						DevelopmentTeamName = "Palle Klewitz (Personal Team)";
 						ProvisioningStyle = Automatic;
 					};
-					E6C9E2841D5D4F6A006326F3 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = BPTAR52LQF;
-						ProvisioningStyle = Automatic;
-					};
-					E6C9E2901D5D4F6A006326F3 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = BPTAR52LQF;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = E658FB6E1D4B879200C7628D /* Build configuration list for PBXProject "PathTracingTests" */;
@@ -456,11 +327,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E658FB721D4B879200C7628D /* PathTracingTests */,
+				E658FB721D4B879200C7628D /* Path Tracing Demo */,
 				E64D25341D4D8C6000445C30 /* PathTracingTestsTests */,
 				E664E3841D52FF1D0032AACA /* PathTracing */,
-				E6C9E2841D5D4F6A006326F3 /* PathTracingWatch */,
-				E6C9E2901D5D4F6A006326F3 /* PathTracingWatch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -490,25 +359,6 @@
 				E664E3A11D5300390032AACA /* mesh2.obj in Resources */,
 				E664E38F1D52FF1E0032AACA /* Assets.xcassets in Resources */,
 				E664E38D1D52FF1E0032AACA /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E6C9E2831D5D4F6A006326F3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E6C9E2B11D5D5007006326F3 /* mesh2.obj in Resources */,
-				E6C9E28B1D5D4F6A006326F3 /* Assets.xcassets in Resources */,
-				E6C9E2891D5D4F6A006326F3 /* Interface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E6C9E28F1D5D4F6A006326F3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E6C9E29B1D5D4F6A006326F3 /* Assets.xcassets in Resources */,
-				E6C9E2B21D5D5008006326F3 /* mesh2.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,42 +426,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6C9E28D1D5D4F6A006326F3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E6C9E2AA1D5D4FE9006326F3 /* Shading.swift in Sources */,
-				E6C9E2A81D5D4FE1006326F3 /* SpacePartitioning.swift in Sources */,
-				E6C9E2AE1D5D4FF5006326F3 /* Matrix.swift in Sources */,
-				E6C9E2A91D5D4FE6006326F3 /* Pathtracing.swift in Sources */,
-				E6C9E2AD1D5D4FF2006326F3 /* MeshImport.swift in Sources */,
-				E6C9E2991D5D4F6A006326F3 /* ExtensionDelegate.swift in Sources */,
-				E6C9E2971D5D4F6A006326F3 /* InterfaceController.swift in Sources */,
-				E6C9E2AC1D5D4FF0006326F3 /* Objects.swift in Sources */,
-				E6C9E2AB1D5D4FEB006326F3 /* Textures.swift in Sources */,
-				E6C9E2B01D5D4FFA006326F3 /* Extensions.swift in Sources */,
-				E6C9E2AF1D5D4FF7006326F3 /* Geometry.swift in Sources */,
-				E658AC541D5DCD2100701C31 /* SceneEncoding.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		E64D253B1D4D8C6000445C30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E658FB721D4B879200C7628D /* PathTracingTests */;
+			target = E658FB721D4B879200C7628D /* Path Tracing Demo */;
 			targetProxy = E64D253A1D4D8C6000445C30 /* PBXContainerItemProxy */;
-		};
-		E6C9E2941D5D4F6A006326F3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E6C9E2901D5D4F6A006326F3 /* PathTracingWatch Extension */;
-			targetProxy = E6C9E2931D5D4F6A006326F3 /* PBXContainerItemProxy */;
-		};
-		E6C9E29E1D5D4F6A006326F3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E6C9E2841D5D4F6A006326F3 /* PathTracingWatch */;
-			targetProxy = E6C9E29D1D5D4F6A006326F3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -638,14 +459,6 @@
 				E664E3911D52FF1E0032AACA /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		E6C9E2871D5D4F6A006326F3 /* Interface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E6C9E2881D5D4F6A006326F3 /* Base */,
-			);
-			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -717,6 +530,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -758,6 +572,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -831,90 +647,6 @@
 			};
 			name = Release;
 		};
-		E6C9E2A01D5D4F6A006326F3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BPTAR52LQF;
-				IBSC_MODULE = PathTracingWatch_Extension;
-				INFOPLIST_FILE = PathTracingWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracing.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Debug;
-		};
-		E6C9E2A11D5D4F6A006326F3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BPTAR52LQF;
-				IBSC_MODULE = PathTracingWatch_Extension;
-				INFOPLIST_FILE = PathTracingWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracing.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Release;
-		};
-		E6C9E2A21D5D4F6A006326F3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BPTAR52LQF;
-				INFOPLIST_FILE = "PathTracingWatch Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracing.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Debug;
-		};
-		E6C9E2A31D5D4F6A006326F3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BPTAR52LQF;
-				INFOPLIST_FILE = "PathTracingWatch Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracing.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -936,7 +668,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E658FB821D4B879300C7628D /* Build configuration list for PBXNativeTarget "PathTracingTests" */ = {
+		E658FB821D4B879300C7628D /* Build configuration list for PBXNativeTarget "Path Tracing Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E658FB831D4B879300C7628D /* Debug */,
@@ -950,24 +682,6 @@
 			buildConfigurations = (
 				E664E3941D52FF1E0032AACA /* Debug */,
 				E664E3951D52FF1E0032AACA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E6C9E2A41D5D4F6A006326F3 /* Build configuration list for PBXNativeTarget "PathTracingWatch Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E6C9E2A21D5D4F6A006326F3 /* Debug */,
-				E6C9E2A31D5D4F6A006326F3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E6C9E2A61D5D4F6A006326F3 /* Build configuration list for PBXNativeTarget "PathTracingWatch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E6C9E2A01D5D4F6A006326F3 /* Debug */,
-				E6C9E2A11D5D4F6A006326F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

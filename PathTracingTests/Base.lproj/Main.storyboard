@@ -11,11 +11,11 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="PathTracingTests" id="1Xt-HY-uBw">
+                            <menuItem title="Path Tracing Demo" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="PathTracingTests" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="Path Tracing Demo" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About PathTracingTests" id="5kV-Vb-QxS">
+                                        <menuItem title="About Path Tracing Demo" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -29,7 +29,7 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                                        <menuItem title="Hide PathTracingTests" keyEquivalent="h" id="Olw-nP-bQN">
+                                        <menuItem title="Hide Path Tracing Demo" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
                                             </connections>
@@ -47,7 +47,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                                        <menuItem title="Quit PathTracingTests" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit Path Tracing Demo" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -337,248 +337,6 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Format" id="jxT-CU-nIS">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Format" id="GEO-Iw-cKr">
-                                    <items>
-                                        <menuItem title="Font" id="Gi5-1S-RQB">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Font" systemMenu="font" id="aXa-aM-Jaq">
-                                                <items>
-                                                    <menuItem title="Show Fonts" keyEquivalent="t" id="Q5e-8K-NDq"/>
-                                                    <menuItem title="Bold" tag="2" keyEquivalent="b" id="GB9-OM-e27"/>
-                                                    <menuItem title="Italic" tag="1" keyEquivalent="i" id="Vjx-xi-njq"/>
-                                                    <menuItem title="Underline" keyEquivalent="u" id="WRG-CD-K1S">
-                                                        <connections>
-                                                            <action selector="underline:" target="Ady-hI-5gd" id="FYS-2b-JAY"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="5gT-KC-WSO"/>
-                                                    <menuItem title="Bigger" tag="3" keyEquivalent="+" id="Ptp-SP-VEL"/>
-                                                    <menuItem title="Smaller" tag="4" keyEquivalent="-" id="i1d-Er-qST"/>
-                                                    <menuItem isSeparatorItem="YES" id="kx3-Dk-x3B"/>
-                                                    <menuItem title="Kern" id="jBQ-r6-VK2">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <menu key="submenu" title="Kern" id="tlD-Oa-oAM">
-                                                            <items>
-                                                                <menuItem title="Use Default" id="GUa-eO-cwY">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="useStandardKerning:" target="Ady-hI-5gd" id="6dk-9l-Ckg"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Use None" id="cDB-IK-hbR">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="turnOffKerning:" target="Ady-hI-5gd" id="U8a-gz-Maa"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Tighten" id="46P-cB-AYj">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="tightenKerning:" target="Ady-hI-5gd" id="hr7-Nz-8ro"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Loosen" id="ogc-rX-tC1">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="loosenKerning:" target="Ady-hI-5gd" id="8i4-f9-FKE"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                            </items>
-                                                        </menu>
-                                                    </menuItem>
-                                                    <menuItem title="Ligatures" id="o6e-r0-MWq">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <menu key="submenu" title="Ligatures" id="w0m-vy-SC9">
-                                                            <items>
-                                                                <menuItem title="Use Default" id="agt-UL-0e3">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="useStandardLigatures:" target="Ady-hI-5gd" id="7uR-wd-Dx6"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Use None" id="J7y-lM-qPV">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="turnOffLigatures:" target="Ady-hI-5gd" id="iX2-gA-Ilz"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Use All" id="xQD-1f-W4t">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="useAllLigatures:" target="Ady-hI-5gd" id="KcB-kA-TuK"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                            </items>
-                                                        </menu>
-                                                    </menuItem>
-                                                    <menuItem title="Baseline" id="OaQ-X3-Vso">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <menu key="submenu" title="Baseline" id="ijk-EB-dga">
-                                                            <items>
-                                                                <menuItem title="Use Default" id="3Om-Ey-2VK">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="unscript:" target="Ady-hI-5gd" id="0vZ-95-Ywn"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Superscript" id="Rqc-34-cIF">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="superscript:" target="Ady-hI-5gd" id="3qV-fo-wpU"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Subscript" id="I0S-gh-46l">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="subscript:" target="Ady-hI-5gd" id="Q6W-4W-IGz"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Raise" id="2h7-ER-AoG">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="raiseBaseline:" target="Ady-hI-5gd" id="4sk-31-7Q9"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Lower" id="1tx-W0-xDw">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="lowerBaseline:" target="Ady-hI-5gd" id="OF1-bc-KW4"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                            </items>
-                                                        </menu>
-                                                    </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="Ndw-q3-faq"/>
-                                                    <menuItem title="Show Colors" keyEquivalent="C" id="bgn-CT-cEk">
-                                                        <connections>
-                                                            <action selector="orderFrontColorPanel:" target="Ady-hI-5gd" id="mSX-Xz-DV3"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="iMs-zA-UFJ"/>
-                                                    <menuItem title="Copy Style" keyEquivalent="c" id="5Vv-lz-BsD">
-                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                                        <connections>
-                                                            <action selector="copyFont:" target="Ady-hI-5gd" id="GJO-xA-L4q"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Paste Style" keyEquivalent="v" id="vKC-jM-MkH">
-                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                                        <connections>
-                                                            <action selector="pasteFont:" target="Ady-hI-5gd" id="JfD-CL-leO"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem title="Text" id="Fal-I4-PZk">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Text" id="d9c-me-L2H">
-                                                <items>
-                                                    <menuItem title="Align Left" keyEquivalent="{" id="ZM1-6Q-yy1">
-                                                        <connections>
-                                                            <action selector="alignLeft:" target="Ady-hI-5gd" id="zUv-R1-uAa"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Center" keyEquivalent="|" id="VIY-Ag-zcb">
-                                                        <connections>
-                                                            <action selector="alignCenter:" target="Ady-hI-5gd" id="spX-mk-kcS"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Justify" id="J5U-5w-g23">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="alignJustified:" target="Ady-hI-5gd" id="ljL-7U-jND"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Align Right" keyEquivalent="}" id="wb2-vD-lq4">
-                                                        <connections>
-                                                            <action selector="alignRight:" target="Ady-hI-5gd" id="r48-bG-YeY"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="4s2-GY-VfK"/>
-                                                    <menuItem title="Writing Direction" id="H1b-Si-o9J">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <menu key="submenu" title="Writing Direction" id="8mr-sm-Yjd">
-                                                            <items>
-                                                                <menuItem title="Paragraph" enabled="NO" id="ZvO-Gk-QUH">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                </menuItem>
-                                                                <menuItem id="YGs-j5-SAR">
-                                                                    <string key="title">	Default</string>
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="makeBaseWritingDirectionNatural:" target="Ady-hI-5gd" id="qtV-5e-UBP"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem id="Lbh-J2-qVU">
-                                                                    <string key="title">	Left to Right</string>
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="makeBaseWritingDirectionLeftToRight:" target="Ady-hI-5gd" id="S0X-9S-QSf"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem id="jFq-tB-4Kx">
-                                                                    <string key="title">	Right to Left</string>
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="makeBaseWritingDirectionRightToLeft:" target="Ady-hI-5gd" id="5fk-qB-AqJ"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem isSeparatorItem="YES" id="swp-gr-a21"/>
-                                                                <menuItem title="Selection" enabled="NO" id="cqv-fj-IhA">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                </menuItem>
-                                                                <menuItem id="Nop-cj-93Q">
-                                                                    <string key="title">	Default</string>
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="makeTextWritingDirectionNatural:" target="Ady-hI-5gd" id="lPI-Se-ZHp"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem id="BgM-ve-c93">
-                                                                    <string key="title">	Left to Right</string>
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="makeTextWritingDirectionLeftToRight:" target="Ady-hI-5gd" id="caW-Bv-w94"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem id="RB4-Sm-HuC">
-                                                                    <string key="title">	Right to Left</string>
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="makeTextWritingDirectionRightToLeft:" target="Ady-hI-5gd" id="EXD-6r-ZUu"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                            </items>
-                                                        </menu>
-                                                    </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="fKy-g9-1gm"/>
-                                                    <menuItem title="Show Ruler" id="vLm-3I-IUL">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="toggleRuler:" target="Ady-hI-5gd" id="FOx-HJ-KwY"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Copy Ruler" keyEquivalent="c" id="MkV-Pr-PK5">
-                                                        <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                                        <connections>
-                                                            <action selector="copyRuler:" target="Ady-hI-5gd" id="71i-fW-3W2"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Paste Ruler" keyEquivalent="v" id="LVM-kO-fVI">
-                                                        <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                                        <connections>
-                                                            <action selector="pasteRuler:" target="Ady-hI-5gd" id="cSh-wd-qM2"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                             <menuItem title="View" id="H8h-7b-M4v">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="HyV-fh-RgO">
@@ -654,25 +412,13 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Help" id="wpr-3q-Mcd">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
-                                    <items>
-                                        <menuItem title="PathTracingTests Help" keyEquivalent="?" id="FKE-Sm-Kum">
-                                            <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                         </items>
                     </menu>
                     <connections>
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PathTracingTests" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Path_Tracing_Demo" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="81" y="-217"/>
@@ -681,7 +427,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="1337 HaXx0r rAy7rAc1n6" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Path Tracing Demo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="477" y="499" width="640" height="360"/>
@@ -698,7 +444,7 @@
         <!--Window Controller-->
         <scene sceneID="Avo-t4-EaP">
             <objects>
-                <windowController id="I4g-wQ-TiA" customClass="UnifiedTitleBarWindowController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController id="I4g-wQ-TiA" customClass="UnifiedTitleBarWindowController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Material Panel" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="uvw-gw-3nk">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -716,7 +462,7 @@
         <!--Material Editor View Controller-->
         <scene sceneID="Ub7-e6-j7E">
             <objects>
-                <viewController id="fwc-wV-n8h" customClass="MaterialEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fwc-wV-n8h" customClass="MaterialEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="AsI-HX-Qyc">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="587"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -848,7 +594,7 @@
         <!--Window Controller-->
         <scene sceneID="T2z-6I-947">
             <objects>
-                <windowController id="eOO-25-98B" customClass="UnifiedTitleBarWindowController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController id="eOO-25-98B" customClass="UnifiedTitleBarWindowController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Control Panel" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Z4L-YQ-tCj">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -866,7 +612,7 @@
         <!--Control Panel View Controller-->
         <scene sceneID="og1-9t-6Hd">
             <objects>
-                <viewController id="D02-Rq-3bX" customClass="ControlPanelViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="D02-Rq-3bX" customClass="ControlPanelViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="GwT-UC-gKb">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="367"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1317,7 +1063,7 @@
         <!--Render Result View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="RenderResultViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="RenderResultViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="960" height="540"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1345,7 +1091,7 @@
         <!--Shader Chooser View Controller-->
         <scene sceneID="nje-YZ-hc3">
             <objects>
-                <viewController storyboardIdentifier="MaterialChooserViewController" id="o7h-RC-Qd0" customClass="ShaderChooserViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MaterialChooserViewController" id="o7h-RC-Qd0" customClass="ShaderChooserViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="aTf-GY-FLW">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
@@ -1405,7 +1151,7 @@
         <!--Default Shader Editor View Controller-->
         <scene sceneID="g1X-bu-wRX">
             <objects>
-                <viewController storyboardIdentifier="DefaultMaterialEditorViewController" id="CVU-Ua-u64" customClass="DefaultShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DefaultMaterialEditorViewController" id="CVU-Ua-u64" customClass="DefaultShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="rV7-jf-pJP">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="81"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
@@ -1435,7 +1181,7 @@
         <!--Diffuse Shader Editor View Controller-->
         <scene sceneID="JzB-D8-4Re">
             <objects>
-                <viewController storyboardIdentifier="DiffuseMaterialEditorViewController" id="8Dl-zo-28C" customClass="DiffuseShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DiffuseMaterialEditorViewController" id="8Dl-zo-28C" customClass="DiffuseShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="4vr-bq-pQR">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="81"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
@@ -1465,7 +1211,7 @@
         <!--Emission Shader Editor View Controller-->
         <scene sceneID="TId-Nx-Q1B">
             <objects>
-                <viewController storyboardIdentifier="EmissionMaterialEditorViewController" id="bOq-Zo-h6X" customClass="EmissionShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EmissionMaterialEditorViewController" id="bOq-Zo-h6X" customClass="EmissionShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Wi4-tO-W7h">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="131"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
@@ -1522,7 +1268,7 @@
         <!--Refraction Shader Editor View Controller-->
         <scene sceneID="iH9-lM-KJw">
             <objects>
-                <viewController storyboardIdentifier="RefractionMaterialEditorViewController" id="ZVA-Lf-rJX" customClass="RefractionShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RefractionMaterialEditorViewController" id="ZVA-Lf-rJX" customClass="RefractionShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="s3m-bS-9BW">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="161"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
@@ -1604,7 +1350,7 @@
         <!--Mix Shader Editor View Controller-->
         <scene sceneID="2Q5-JY-t3x">
             <objects>
-                <viewController storyboardIdentifier="MixMaterialEditorViewController" id="bGC-bC-VVH" customClass="MixShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MixMaterialEditorViewController" id="bGC-bC-VVH" customClass="MixShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m7F-wR-D4B">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1682,7 +1428,7 @@
         <!--Color Texture Chooser View Controller-->
         <scene sceneID="CyY-sh-nn1">
             <objects>
-                <viewController storyboardIdentifier="ColorTextureChooserViewController" id="9V0-65-18S" customClass="ColorTextureChooserViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ColorTextureChooserViewController" id="9V0-65-18S" customClass="ColorTextureChooserViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="EwZ-gb-dM9">
                         <rect key="frame" x="0.0" y="0.0" width="233" height="53"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1760,7 +1506,7 @@
         <!--Add Shader Editor View Controller-->
         <scene sceneID="H68-6W-vXA">
             <objects>
-                <viewController storyboardIdentifier="AddMaterialEditorViewController" id="1hx-LH-qaJ" customClass="AddShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddMaterialEditorViewController" id="1hx-LH-qaJ" customClass="AddShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Aet-zs-Iat">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1814,7 +1560,7 @@
         <!--Reflection Shader Editor View Controller-->
         <scene sceneID="F14-p2-7dn">
             <objects>
-                <viewController storyboardIdentifier="ReflectionMaterialEditorViewController" id="OYU-fE-SEs" customClass="ReflectionShaderEditorViewController" customModule="PathTracingTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReflectionMaterialEditorViewController" id="OYU-fE-SEs" customClass="ReflectionShaderEditorViewController" customModule="Path_Tracing_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="7YL-Fp-pr1">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="131"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
