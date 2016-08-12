@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				E658AC551D5DED0300701C31 /* .gitignore */,
-				E658FB751D4B879300C7628D /* PathTracingTests */,
+				E658FB751D4B879300C7628D /* Path Tracing Demo */,
 				E64D25361D4D8C6000445C30 /* PathTracingTestsTests */,
 				E664E3861D52FF1D0032AACA /* PathTracing */,
 				E658FB741D4B879300C7628D /* Products */,
@@ -171,7 +171,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E658FB751D4B879300C7628D /* PathTracingTests */ = {
+		E658FB751D4B879300C7628D /* Path Tracing Demo */ = {
 			isa = PBXGroup;
 			children = (
 				E658FB761D4B879300C7628D /* AppDelegate.swift */,
@@ -183,6 +183,7 @@
 				E658FB7C1D4B879300C7628D /* Main.storyboard */,
 				E658FB7F1D4B879300C7628D /* Info.plist */,
 			);
+			name = "Path Tracing Demo";
 			path = PathTracingTests;
 			sourceTree = "<group>";
 		};
@@ -314,7 +315,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E658FB6E1D4B879200C7628D /* Build configuration list for PBXProject "PathTracingTests" */;
+			buildConfigurationList = E658FB6E1D4B879200C7628D /* Build configuration list for PBXProject "Path Tracing Demo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -659,7 +660,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E658FB6E1D4B879200C7628D /* Build configuration list for PBXProject "PathTracingTests" */ = {
+		E658FB6E1D4B879200C7628D /* Build configuration list for PBXProject "Path Tracing Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E658FB801D4B879300C7628D /* Debug */,
