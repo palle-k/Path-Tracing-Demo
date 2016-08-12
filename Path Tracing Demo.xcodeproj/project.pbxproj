@@ -28,7 +28,6 @@
 		E658FB7E1D4B879300C7628D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E658FB7C1D4B879300C7628D /* Main.storyboard */; };
 		E658FB861D4B87AF00C7628D /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB851D4B87AF00C7628D /* Geometry.swift */; };
 		E658FB881D4C245500C7628D /* Pathtracing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB871D4C245500C7628D /* Pathtracing.swift */; };
-		E658FB8A1D4C285A00C7628D /* PathTracingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658FB891D4C285A00C7628D /* PathTracingView.swift */; };
 		E65EC0851D598FCA0054C2F5 /* ColorTextureChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EC0841D598FCA0054C2F5 /* ColorTextureChooserViewController.swift */; };
 		E65EC0871D5A42800054C2F5 /* MaterialEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EC0861D5A42800054C2F5 /* MaterialEditorViewController.swift */; };
 		E65EC0891D5A436C0054C2F5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EC0881D5A436C0054C2F5 /* Extensions.swift */; };
@@ -97,10 +96,10 @@
 		E658FB7F1D4B879300C7628D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E658FB851D4B87AF00C7628D /* Geometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		E658FB871D4C245500C7628D /* Pathtracing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pathtracing.swift; sourceTree = "<group>"; };
-		E658FB891D4C285A00C7628D /* PathTracingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathTracingView.swift; sourceTree = "<group>"; };
 		E65EC0841D598FCA0054C2F5 /* ColorTextureChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorTextureChooserViewController.swift; sourceTree = "<group>"; };
 		E65EC0861D5A42800054C2F5 /* MaterialEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialEditorViewController.swift; sourceTree = "<group>"; };
 		E65EC0881D5A436C0054C2F5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E65F397A1D5DEFEA00CA8F41 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E664E3851D52FF1D0032AACA /* PathTracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PathTracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E664E3871D52FF1E0032AACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E664E3891D52FF1E0032AACA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -141,23 +140,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E64D25361D4D8C6000445C30 /* PathTracingTestsTests */ = {
+		E64D25361D4D8C6000445C30 /* Path Tracing Demo Tests */ = {
 			isa = PBXGroup;
 			children = (
 				E64D25371D4D8C6000445C30 /* MatrixTests.swift */,
 				E64D25391D4D8C6000445C30 /* Info.plist */,
 			);
-			name = PathTracingTestsTests;
 			path = "Path Tracing Demo Tests";
 			sourceTree = "<group>";
 		};
 		E658FB6A1D4B879200C7628D = {
 			isa = PBXGroup;
 			children = (
+				E65F397A1D5DEFEA00CA8F41 /* README.md */,
 				E658AC551D5DED0300701C31 /* .gitignore */,
 				E658FB751D4B879300C7628D /* Path Tracing Demo */,
-				E64D25361D4D8C6000445C30 /* PathTracingTestsTests */,
-				E664E3861D52FF1D0032AACA /* PathTracing */,
+				E64D25361D4D8C6000445C30 /* Path Tracing Demo Tests */,
+				E664E3861D52FF1D0032AACA /* PathTracing iOS */,
 				E658FB741D4B879300C7628D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -176,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				E658FB761D4B879300C7628D /* AppDelegate.swift */,
-				E658FB891D4C285A00C7628D /* PathTracingView.swift */,
 				E65EC0881D5A436C0054C2F5 /* Extensions.swift */,
 				E687747F1D5AD5DE0037C513 /* Path Tracing */,
 				E68774811D5AD5FC0037C513 /* View Controllers */,
@@ -187,7 +185,7 @@
 			path = "Path Tracing Demo";
 			sourceTree = "<group>";
 		};
-		E664E3861D52FF1D0032AACA /* PathTracing */ = {
+		E664E3861D52FF1D0032AACA /* PathTracing iOS */ = {
 			isa = PBXGroup;
 			children = (
 				E664E3A01D5300390032AACA /* mesh2.obj */,
@@ -199,6 +197,7 @@
 				E664E3901D52FF1E0032AACA /* LaunchScreen.storyboard */,
 				E664E3931D52FF1E0032AACA /* Info.plist */,
 			);
+			name = "PathTracing iOS";
 			path = PathTracing;
 			sourceTree = "<group>";
 		};
@@ -395,7 +394,6 @@
 				E61433151D4E8B2D00D0CF34 /* MeshImport.swift in Sources */,
 				E658FB861D4B87AF00C7628D /* Geometry.swift in Sources */,
 				E65EC0851D598FCA0054C2F5 /* ColorTextureChooserViewController.swift in Sources */,
-				E658FB8A1D4C285A00C7628D /* PathTracingView.swift in Sources */,
 				E65EC0871D5A42800054C2F5 /* MaterialEditorViewController.swift in Sources */,
 				E658AC521D5DCD2100701C31 /* SceneEncoding.swift in Sources */,
 				E61433121D4E3CCD00D0CF34 /* Objects.swift in Sources */,
