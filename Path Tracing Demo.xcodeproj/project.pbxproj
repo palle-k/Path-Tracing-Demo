@@ -588,7 +588,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = BPTAR52LQF;
-				INFOPLIST_FILE = PathTracingTests/Info.plist;
+				INFOPLIST_FILE = "Path Tracing Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -605,7 +605,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = BPTAR52LQF;
 				GCC_OPTIMIZATION_LEVEL = fast;
-				INFOPLIST_FILE = PathTracingTests/Info.plist;
+				INFOPLIST_FILE = "Path Tracing Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

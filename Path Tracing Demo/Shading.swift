@@ -250,7 +250,6 @@ extension Material: CustomStringConvertible
 
 protocol Shader: class
 {
-	var requiresMultipleSamples:Bool { get }
 	var color: Color { get }
 	var texture: Texture? { get }
 	
@@ -288,7 +287,6 @@ extension Shader
 
 class DefaultShader: Shader
 {
-	let requiresMultipleSamples: Bool = false
 	var color: Color
 	var texture: Texture?
 	
@@ -328,7 +326,6 @@ extension DefaultShader: CustomStringConvertible
 
 class DiffuseShader: Shader
 {
-	let requiresMultipleSamples: Bool = true
 	
 	var color: Color
 	var texture: Texture?
@@ -405,8 +402,6 @@ class EmissionShader: Shader
 	var strength: Float
 	var color: Color
 	var texture: Texture?
-	let requiresMultipleSamples: Bool = false
-	
 	init(strength: Float, color: Color, texture: Texture? = nil)
 	{
 		self.strength = strength
@@ -442,10 +437,6 @@ class ReflectionShader: Shader
 	var color: Color
 	var texture: Texture?
 	var roughness: Float
-	var requiresMultipleSamples: Bool
-	{
-		return roughness != 0.0
-	}
 	
 	init(color: Color, roughness: Float, texture: Texture? = nil)
 	{
@@ -540,10 +531,6 @@ class RefractionShader: Shader
 	var texture: Texture?
 	var indexOfRefraction: Float
 	var roughness: Float
-	var requiresMultipleSamples: Bool
-	{
-		return roughness != 0.0
-	}
 	
 	init(color: Color, texture: Texture? = nil, indexOfRefraction: Float, roughness: Float)
 	{
@@ -737,11 +724,6 @@ extension RefractionShader: CustomStringConvertible
 
 class AddShader: Shader
 {
-	var requiresMultipleSamples: Bool
-	{
-		return shader1.requiresMultipleSamples || shader2.requiresMultipleSamples
-	}
-	
 	var shader1: Shader
 	var shader2: Shader
 	let color: Color = Color(withRed: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -797,11 +779,6 @@ extension AddShader: CustomStringConvertible
 
 class MixShader: Shader
 {
-	var requiresMultipleSamples: Bool
-	{
-		return shader1.requiresMultipleSamples || shader2.requiresMultipleSamples
-	}
-	
 	var shader1: Shader
 	var shader2: Shader
 	var balance: Float
