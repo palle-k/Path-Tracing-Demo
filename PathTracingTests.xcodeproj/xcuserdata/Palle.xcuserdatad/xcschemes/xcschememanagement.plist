@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>PathTracing.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>PathTracingTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>PathTracingWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>E64D25341D4D8C6000445C30</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E658FB721D4B879200C7628D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E664E3841D52FF1D0032AACA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E6C9E2841D5D4F6A006326F3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
