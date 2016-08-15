@@ -2,6 +2,25 @@
 
 ![Rendered Image](http://i.imgur.com/wbiIbH9.png "rendered image")
 
+## Features
+### Shaders
+- Emission
+- Diffuse
+- Reflection
+- Refraction
+- Mix
+- Add
+
+### Refraction
+- Fresnel glass
+- Depth attenuation
+
+### Other Features
+- Depth of Field
+- Wavefront .obj import
+- Save materials
+- Texturing
+
 ## License
 
 Copyright (c) 2016 Palle Klewitz.
