@@ -51,6 +51,7 @@ class PathTracer : PathTracingWorkerDelegate
 	let scene:Scene3D
 	private var workers: [LocalPathTracingWorker] = []
 	private var context: CGContext!
+	private(set) var result: CGImage?
 	
 	weak var delegate: PathTracerDelegate?
 	private var managerQueue: DispatchQueue!
@@ -165,7 +166,7 @@ class PathTracer : PathTracingWorkerDelegate
 		}
 	}
 	
-	private final func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt8])
+	private final func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
 	{
 		managerQueue.async
 		{
@@ -189,8 +190,8 @@ class PathTracer : PathTracingWorkerDelegate
 				data: &mutableResult,
 				width: region.size.width,
 				height: region.size.height,
-				bitsPerComponent: 8,
-				bytesPerRow: region.size.width * 4,
+				bitsPerComponent: 16,
+				bytesPerRow: region.size.width * 4 * 2,
 				space: CGColorSpaceCreateDeviceRGB(),
 				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
 			guard let regionImage = ctx?.makeImage() else { fatalError("Image could not be created") }
@@ -205,6 +206,7 @@ class PathTracer : PathTracingWorkerDelegate
 				print("Finished rendering. Duration: \(Float(time - self.startTime))s")
 				DispatchQueue.main.async
 				{
+					self.result = image
 					self.delegate?.pathTracingDidFinish(render: image)
 				}
 			}
@@ -213,13 +215,14 @@ class PathTracer : PathTracingWorkerDelegate
 				let progress = 1.0 - Float(self.tiles.count) / Float(self.totalTileCount)
 				DispatchQueue.main.async
 				{
+					self.result = image
 					self.delegate?.pathTracingDidUpdate(render: image, progress: progress)
 				}
 			}
 		}
 	}
 	
-	private func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt8])
+	private func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
 	{
 		managerQueue.async
 		{
@@ -229,8 +232,8 @@ class PathTracer : PathTracingWorkerDelegate
 				data: &mutableResult,
 				width: region.size.width,
 				height: region.size.height,
-				bitsPerComponent: 8,
-				bytesPerRow: region.size.width * 4,
+				bitsPerComponent: 16,
+				bytesPerRow: region.size.width * 4 * 2,
 				space: CGColorSpaceCreateDeviceRGB(),
 				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
 			guard let regionImage = ctx?.makeImage() else { fatalError("Image could not be created") }
@@ -248,6 +251,7 @@ class PathTracer : PathTracingWorkerDelegate
 			let progress = 1.0 - Float(self.tiles.count) / Float(self.totalTileCount)
 			DispatchQueue.main.async
 			{
+				self.result = image
 				self.delegate?.pathTracingDidUpdate(render: image, progress: progress)
 			}
 		}
@@ -312,7 +316,7 @@ private class LocalPathTracingWorker
 		{
 			var lastReportTime = CACurrentMediaTime()
 			
-			var data = [UInt8](repeating: 0, count: region.size.width * region.size.height * 4)
+			var data = [UInt16](repeating: 0, count: region.size.width * region.size.height * 4)
 			let horizontalScaleFactor = 1.0 / Float(self.totalSize.height) * Float(self.totalSize.width)
 			
 			let fovScalingFactor = tanf(self.camera.fieldOfView * 0.5)
@@ -366,10 +370,10 @@ private class LocalPathTracingWorker
 					//TODO: Implement Alpha blending
 					color = color * (1.0 / Float(self.samples))
 					
-					data[index]     = color.red8
-					data[index + 1] = color.green8
-					data[index + 2] = color.blue8
-					data[index + 3] = 255
+					data[index]     = color.red16.bigEndian
+					data[index + 1] = color.green16.bigEndian
+					data[index + 2] = color.blue16.bigEndian
+					data[index + 3] = UInt16.max.bigEndian
 				}
 				if self.shouldStop
 				{
@@ -396,6 +400,6 @@ private class LocalPathTracingWorker
 
 private protocol PathTracingWorkerDelegate : class
 {
-	func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt8])
-	func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt8])
+	func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
+	func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
 }

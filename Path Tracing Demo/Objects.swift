@@ -37,14 +37,10 @@ protocol Object3D : CustomStringConvertible
 	
 	var materials:[Material] { get }
 	
-	var encoded: Dictionary<String, AnyObject> { get }
-	
 	nonmutating func translated(to point: Point3D) -> Object3D
 	nonmutating func scaled(_ factor: Float) -> Object3D
 	
 	mutating func assignMaterial(_ material: Material)
-	
-	init?(with encodedData: Dictionary<String, AnyObject>)
 }
 
 struct ExplicitTriangleMesh3D : Object3D

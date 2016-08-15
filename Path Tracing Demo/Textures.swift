@@ -144,10 +144,20 @@ class ImageTexture: Texture
 		self.init(with: cgImage)
 	}
 	
+	@inline(__always)
+	private func rangeLimited(_ textureCoordinate: TextureCoordinate) -> TextureCoordinate
+	{
+		let u = fmodf(fmodf(textureCoordinate.u, 1.0) + 1.0, 1.0)
+		let v = fmodf(fmodf(textureCoordinate.v, 1.0) + 1.0, 1.0)
+		
+		return TextureCoordinate(u: u, v: v)
+	}
+	
 	func color(for textureCoordinate: TextureCoordinate, atAngle incidentAngle: Float) -> Color
 	{
-		let x = textureCoordinate.u * Float(width-1)
-		let y = textureCoordinate.v * Float(height-1)
+		let limited = rangeLimited(textureCoordinate)
+		let x = limited.u * Float(width-1)
+		let y = limited.v * Float(height-1)
 		
 		let lx = floorf(x)
 		let gx = ceilf(x)

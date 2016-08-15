@@ -39,6 +39,37 @@ extension Array
 	}
 }
 
+extension Array where Element: Comparable
+{
+	func kthSmallestElement(_ k: Int) -> Element
+	{
+		//using quickselect algorithm
+		let pivotIndex = Int(arc4random_uniform(UInt32(self.count)))
+		let pivot = self[pivotIndex]
+		
+		let lower = self.filter{$0 < pivot}
+		let upper = self.filter{$0 > pivot}
+		
+		if k <= lower.count
+		{
+			return lower.kthSmallestElement(k)
+		}
+		else if k > self.count - upper.count
+		{
+			return upper.kthSmallestElement(k - (self.count - upper.count))
+		}
+		else
+		{
+			return pivot
+		}
+	}
+	
+	func kthLargestElement(_ k: Int) -> Element
+	{
+		return kthSmallestElement(self.count - k - 1)
+	}
+}
+
 extension Array where Element: Equatable, Element: Hashable
 {
 	func distinct() -> [Element]

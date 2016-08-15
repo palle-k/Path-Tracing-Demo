@@ -31,7 +31,7 @@ class MaterialEditorViewController: NSViewController
 	@IBOutlet weak var materialList: NSTableView!
 	@IBOutlet weak var shaderContainerView: NSView!
 	
-	private lazy var materials:[Material] = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct() ?? []
+	private lazy var materials:[Material] = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct().sorted{$0.name < $1.name} ?? []
 	
 	override func viewDidLoad()
 	{
@@ -48,7 +48,7 @@ class MaterialEditorViewController: NSViewController
 	
 	func reload(notification: NSNotification?)
 	{
-		materials = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct() ?? []
+		materials = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct().sorted{$0.name < $1.name} ?? []
 		self.materialList.reloadData()
 	}
 }

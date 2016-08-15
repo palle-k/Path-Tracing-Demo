@@ -44,6 +44,26 @@ class ColorTextureChooserViewController: NSViewController
 		}
 	}
 	var texture: Texture? = nil
+	{
+		didSet
+		{
+			if let texture = self.texture
+			{
+				if texture is ImageTexture
+				{
+					textureTypeChooser.selectItem(at: 2)
+				}
+				else if texture is CheckerboardTexture
+				{
+					textureTypeChooser.selectItem(at: 1)
+				}
+			}
+			else
+			{
+				textureTypeChooser.selectItem(at: 0)
+			}
+		}
+	}
 	
 	@IBOutlet weak var colorWell: NSColorWell!
 	@IBOutlet weak var textureTypeChooser: NSPopUpButton!

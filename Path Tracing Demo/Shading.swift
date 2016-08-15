@@ -147,6 +147,11 @@ struct Color
 		return sqrt(red * red + green * green + blue * blue) * 0.577350269
 	}
 	
+	var clamped: Color
+	{
+		return Color(withRed: max(min(red, 1.0), 0.0), green: max(min(green, 1.0), 0.0), blue: max(min(blue, 1.0), 0.0), alpha: max(min(alpha, 1.0), 0.0))
+	}
+	
 	init(withRed red: Float, green: Float, blue: Float, alpha: Float)
 	{
 		self.red   = red
@@ -457,33 +462,32 @@ class ReflectionShader: Shader
 		let color = self.textureColor(forTriangle: triangle, withIntersectionCoordinates: barycentricIntersectionCoordinates)
 		guard (color * previousColor).brightness > 0.001 else { return .black() }
 		
-		let normal  = (triangle.a.normal * barycentricIntersectionCoordinates.alpha
+		var normal  = (triangle.a.normal * barycentricIntersectionCoordinates.alpha
 			+ triangle.b.normal * barycentricIntersectionCoordinates.beta
 			+ triangle.c.normal * barycentricIntersectionCoordinates.gamma).normalized
 		
 		let toCamera = -rayDirection
 		
-		guard toCamera * normal > 0
-		else
+		if rayDirection * normal < 0
 		{
-			return .black()
+			normal = -normal
 		}
 		
 		var outgoingRayDirection = (toCamera - 2 * (toCamera - (normal * toCamera) * normal)).normalized
 		
 		if roughness != 0.0
 		{
-			let roughnessFactor = roughness * abs(cos(outgoingRayDirection ∠ normal))
+			//inverse of the sigmoid function scaled by the roughness factor
+			let roughnessFactor = roughness * roughness
+			let randomizedOutgoingRayDirection = Vector3D(x: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
+			                                              y: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
+			                                              z: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0)) * roughnessFactor
 			
-			var randomizedOutgoingRayDirection = Vector3D(x: Float(drand48() * 2.0 - 1.0),
-			                                              y: Float(drand48() * 2.0 - 1.0),
-			                                              z: Float(drand48() * 2.0 - 1.0)).normalized
-			if randomizedOutgoingRayDirection * normal < 0
+			outgoingRayDirection = (randomizedOutgoingRayDirection + outgoingRayDirection).normalized
+			if outgoingRayDirection * normal < 0
 			{
-				randomizedOutgoingRayDirection = -randomizedOutgoingRayDirection
+				outgoingRayDirection = -outgoingRayDirection
 			}
-			
-			outgoingRayDirection = (outgoingRayDirection * (1 - roughness) + randomizedOutgoingRayDirection * roughnessFactor).normalized
 		}
 		
 		let base = point + outgoingRayDirection * 0.001
@@ -529,15 +533,21 @@ class RefractionShader: Shader
 {
 	var color: Color
 	var texture: Texture?
+	
+	var volumeColor: Color
+	var absorptionStrength: Float
+	
 	var indexOfRefraction: Float
 	var roughness: Float
 	
-	init(color: Color, texture: Texture? = nil, indexOfRefraction: Float, roughness: Float)
+	init(color: Color, texture: Texture? = nil, indexOfRefraction: Float, roughness: Float, volumeColor: Color = .white(), absorptionStrength: Float = 0.0)
 	{
 		self.color = color
 		self.texture = texture
 		self.indexOfRefraction = indexOfRefraction
 		self.roughness = roughness
+		self.volumeColor = volumeColor
+		self.absorptionStrength = absorptionStrength
 	}
 	
 	func color(forTriangle triangle: Triangle3D,
@@ -557,14 +567,18 @@ class RefractionShader: Shader
 			+ triangle.c.normal * barycentricIntersectionCoordinates.gamma).normalized
 		
 		let ior: Float
+		let incoming: Bool
+		
 		if normal * rayDirection <= 0 //into the object
 		{
 			ior = self.indexOfRefraction
+			incoming = true
 		}
 		else //out of the object
 		{
 			ior = 1 / self.indexOfRefraction
 			normal = -normal
+			incoming = false
 		}
 		
 		let iorInv = 1.0 / ior
@@ -591,29 +605,27 @@ class RefractionShader: Shader
 		
 		let transmittedColor: Color
 		
-		if transmittance > 0
+		if transmittance > 0.001
 		{
 			if roughness != 0.0
 			{
 				//let roughnessFactor = roughness * abs(cos(transmissionRayDirection ∠ normal))
+				let roughnessFactor = roughness * roughness
+				let randomizedOutgoingRayDirection = Vector3D(x: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
+				                                              y: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
+				                                              z: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0)) * roughnessFactor
 				
-				let roughnessFactor = roughness
-				
-				var randomizedOutgoingRayDirection = Vector3D(x: Float(drand48() * 2.0 - 1.0),
-				                                              y: Float(drand48() * 2.0 - 1.0),
-				                                              z: Float(drand48() * 2.0 - 1.0)).normalized
-				if randomizedOutgoingRayDirection * normal < 0
+				transmissionRayDirection = (randomizedOutgoingRayDirection + transmissionRayDirection).normalized
+				if transmissionRayDirection * normal > 0
 				{
-					randomizedOutgoingRayDirection = -randomizedOutgoingRayDirection
+					transmissionRayDirection = -transmissionRayDirection
 				}
-				
-				transmissionRayDirection = (transmissionRayDirection * (1 - roughnessFactor) + randomizedOutgoingRayDirection * roughnessFactor).normalized
 			}
 			
 			let base = point + transmissionRayDirection * 0.001
 			let ray = Ray3D(base: base, direction: transmissionRayDirection)
 			
-			transmittedColor = getTransmittedColor(ray: ray, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor, ambientColor: ambientColor)
+			transmittedColor = getTransmittedColor(ray: ray, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor, ambientColor: ambientColor, incoming: incoming)
 		}
 		else
 		{
@@ -628,23 +640,22 @@ class RefractionShader: Shader
 			
 			if roughness != 0.0
 			{
-				let roughnessFactor = roughness * abs(cos(reflectionRayDirection ∠ normal))
+				let roughnessFactor = roughness * roughness
+				let randomizedOutgoingRayDirection = Vector3D(x: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
+				                                              y: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
+				                                              z: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0)) * roughnessFactor
 				
-				var randomizedOutgoingRayDirection = Vector3D(x: Float(drand48() * 2.0 - 1.0),
-				                                              y: Float(drand48() * 2.0 - 1.0),
-				                                              z: Float(drand48() * 2.0 - 1.0)).normalized
-				if randomizedOutgoingRayDirection * normal < 0
+				reflectionRayDirection = (randomizedOutgoingRayDirection + reflectionRayDirection).normalized
+				if reflectionRayDirection * normal < 0
 				{
-					randomizedOutgoingRayDirection = -randomizedOutgoingRayDirection
+					reflectionRayDirection = -reflectionRayDirection
 				}
-				
-				reflectionRayDirection = (reflectionRayDirection * (1 - roughness) + randomizedOutgoingRayDirection * roughnessFactor).normalized
 			}
 			
 			let reflectedBase = point + reflectionRayDirection * 0.001
 			let reflectedRay = Ray3D(base: reflectedBase, direction: reflectionRayDirection)
 			
-			reflectedColor = getReflectedColor(ray: reflectedRay, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor, ambientColor: ambientColor)
+			reflectedColor = getReflectedColor(ray: reflectedRay, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor, ambientColor: ambientColor, incoming: incoming)
 		}
 		else
 		{
@@ -655,7 +666,7 @@ class RefractionShader: Shader
 	}
 	
 	@inline(__always)
-	private func getTransmittedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, ambientColor: Color) -> Color
+	private func getTransmittedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, ambientColor: Color, incoming: Bool) -> Color
 	{
 		if let nextIntersection = sceneGeometry.nearestIntersectingTriangle(forRay: ray)
 		{
@@ -670,7 +681,20 @@ class RefractionShader: Shader
 					ambientColor: ambientColor,
 					previousColor: previousColor,
 					maximumRayDepth: maximumRayDepth - 1)
-				return nextColor * color
+				
+				let volume: Color
+				
+				if incoming && absorptionStrength > 0
+				{
+					let volumeFactor = min(absorptionStrength * nextIntersection.ray, 1.0)
+					volume = (Color.white() * (1.0 - volumeFactor)) + (volumeColor * volumeFactor)
+				}
+				else
+				{
+					volume = .white()
+				}
+				
+				return nextColor * color * volume
 			}
 			else
 			{
@@ -684,7 +708,7 @@ class RefractionShader: Shader
 	}
 	
 	@inline(__always)
-	private func getReflectedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, ambientColor: Color) -> Color
+	private func getReflectedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, ambientColor: Color, incoming: Bool) -> Color
 	{
 		if let nextIntersection = sceneGeometry.nearestIntersectingTriangle(forRay: ray)
 		{
@@ -699,7 +723,20 @@ class RefractionShader: Shader
 					ambientColor: ambientColor,
 					previousColor: previousColor,
 					maximumRayDepth: maximumRayDepth - 1)
-				return nextColor * color
+				
+				let volume: Color
+				
+				if !incoming && absorptionStrength > 0
+				{
+					let volumeFactor = min(absorptionStrength * nextIntersection.ray, 1.0)
+					volume = (Color.white() * (1.0 - volumeFactor)) + (volumeColor * volumeFactor)
+				}
+				else
+				{
+					volume = .white()
+				}
+				
+				return nextColor * color * volume
 			}
 			else
 			{
@@ -717,10 +754,9 @@ extension RefractionShader: CustomStringConvertible
 {
 	var description: String
 	{
-		return "RefractionShader (color: \(color), texture: \(texture), Index of Refraction: \(indexOfRefraction), roughness: \(roughness))"
+		return "RefractionShader (color: \(color), texture: \(texture), index of refraction: \(indexOfRefraction), roughness: \(roughness), depth attenuation color: \(volumeColor), depth attenuation strength: \(absorptionStrength))"
 	}
 }
-
 
 class AddShader: Shader
 {

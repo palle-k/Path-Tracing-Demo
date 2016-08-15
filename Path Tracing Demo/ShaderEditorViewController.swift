@@ -221,6 +221,8 @@ class RefractionShaderEditorViewController: ShaderEditorViewController, ColorTex
 {
 	@IBOutlet weak var txtIndexOfRefraction: NSTextField!
 	@IBOutlet weak var txtRoughness: NSTextField!
+	@IBOutlet weak var cwAttenuationColor: NSColorWell!
+	@IBOutlet weak var txtAttenuationStrength: NSTextField!
 	
 	override var shader: Shader
 	{
@@ -228,6 +230,15 @@ class RefractionShaderEditorViewController: ShaderEditorViewController, ColorTex
 		{
 			txtIndexOfRefraction.floatValue = (shader as? RefractionShader)?.indexOfRefraction ?? 1.0
 			txtRoughness.floatValue = (shader as? RefractionShader)?.roughness ?? 0.0
+			txtAttenuationStrength.floatValue = (shader as? RefractionShader)?.absorptionStrength ?? 0.0
+			
+			if let attenuationColor = (shader as? RefractionShader)?.volumeColor
+			{
+				cwAttenuationColor.color = NSColor(calibratedRed: CGFloat(attenuationColor.red),
+												   green:		  CGFloat(attenuationColor.green),
+												   blue:		  CGFloat(attenuationColor.blue),
+				                                   alpha:		  CGFloat(attenuationColor.alpha))
+			}
 		}
 	}
 	
@@ -246,6 +257,7 @@ class RefractionShaderEditorViewController: ShaderEditorViewController, ColorTex
 		super.viewDidLoad()
 		txtIndexOfRefraction.delegate = self
 		txtRoughness.delegate = self
+		txtAttenuationStrength.delegate = self
 		txtIndexOfRefraction.floatValue = (shader as? RefractionShader)?.indexOfRefraction ?? 1.0
 		txtRoughness.floatValue = (shader as? RefractionShader)?.roughness ?? 0.0
 	}
@@ -274,6 +286,28 @@ class RefractionShaderEditorViewController: ShaderEditorViewController, ColorTex
 	{
 		(shader as? RefractionShader)?.indexOfRefraction = txtIndexOfRefraction.floatValue
 		(shader as? RefractionShader)?.roughness = txtRoughness.floatValue
+		(shader as? RefractionShader)?.absorptionStrength = txtAttenuationStrength.floatValue
+	}
+	
+	@IBAction func didChangeAttenuationColor(_ sender: AnyObject)
+	{
+		let color = cwAttenuationColor.color
+		
+		let r = Float(color.redComponent)
+		let g = Float(color.greenComponent)
+		let b = Float(color.blueComponent)
+		let a = Float(color.alphaComponent)
+		
+		guard let currentAttenuationColor = (shader as? RefractionShader)?.volumeColor else { return }
+		guard currentAttenuationColor.red != r ||
+			currentAttenuationColor.green != g ||
+			currentAttenuationColor.blue  != b ||
+			currentAttenuationColor.alpha != a
+		else
+		{
+			return
+		}
+		(shader as? RefractionShader)?.volumeColor = Color(withRed: r, green: g, blue: b, alpha: a)
 	}
 }
 

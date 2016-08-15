@@ -33,13 +33,46 @@ private extension String
 	}
 }
 
-class WavefrontModelImporter
+class WavefrontModelImporter: NSObject, ProgressReporting
 {
 	weak var materialDataSource: WavefrontModelImporterMaterialDataSource?
+	
+	var progress: Progress = Progress()
 	
 	func `import`(from url: URL) throws -> [Object3D]
 	{
 		let data = try Data(contentsOf: url)
+		
+		
+		
+		let materialURL = url.deletingLastPathComponent()
+			.appendingPathComponent(
+				url.lastPathComponent
+					.components(separatedBy: ".")
+					.dropLast()
+					.joined(separator: "."))
+			.appendingPathExtension("material")
+		print(materialURL)
+		
+		let materials:[String: Material]
+		
+		if
+			let materialData = try? Data(contentsOf: materialURL, options: []),
+		    let encodedMaterials = NSKeyedUnarchiver.unarchiveObject(with: materialData) as? NSDictionary
+		{
+			var mutableMaterials:[String: Material] = [:]
+			for key in (encodedMaterials.allKeys.flatMap{$0 as? String})
+			{
+				guard let shader = (encodedMaterials[key] as? ShaderDecoder)?.decoded else { continue }
+				mutableMaterials[key] = Material(withShader: shader, named: key)
+			}
+			materials = mutableMaterials
+		}
+		else
+		{
+			materials = [:]
+		}
+		
 		guard let dataString = String(data: data, encoding: String.Encoding.utf8) else { throw NSError(domain: "com.PK.pathtracingtests.wavefront.import", code: 1, userInfo: [:]) }
 
 		var points:[Point3D] = []
@@ -51,7 +84,13 @@ class WavefrontModelImporter
 		var currentMaterial: Material? = nil
 		var currentObjectName: String? = nil
 		
-		for line in (dataString.components(separatedBy: CharacterSet.newlines).map{$0.trimmed}.filter{!$0.isEmpty}.filter{$0[$0.startIndex] != "#"})
+		var processedCount = 0
+		let lines = dataString.components(separatedBy: CharacterSet.newlines).map{$0.trimmed}.filter{!$0.isEmpty}.filter{$0[$0.startIndex] != "#"}
+		
+		progress.totalUnitCount = Int64(lines.count)
+		progress.completedUnitCount = 0
+		
+		for line in lines
 		{
 			let lineComponents = line.components(separatedBy: CharacterSet.whitespaces)
 			
@@ -172,8 +211,18 @@ class WavefrontModelImporter
 				{
 					continue
 				}
-				currentMaterial = materialDataSource?.material(named: lineComponents[1], in: materialLibrary)
+				if let material = materials[lineComponents[1]]
+				{
+					currentMaterial = material
+				}
+				else
+				{
+					currentMaterial = materialDataSource?.material(named: lineComponents[1], in: materialLibrary)
+				}
 			}
+			
+			processedCount += 1
+			progress.completedUnitCount = Int64(processedCount)
 		}
 		if !faces.isEmpty
 		{
@@ -193,3 +242,77 @@ protocol WavefrontModelImporterMaterialDataSource: class
 {
 	func material(named name: String, `in` materialLibrary: String) -> Material
 }
+
+class WavefrontModelExporter
+{
+	class func export(scene: Scene3D) -> (wavefrontData: Data, materialData: Data)
+	{
+		var dataString = "# Path Tracing Demo by PK\n"
+		
+		var offset = 0
+		
+		for object in scene.objects
+		{
+			dataString.append("o \(object.name)\n")
+			
+			let triangles = object.transformed
+			
+			let vertices = triangles
+				.flatMap{[$0.a, $0.b, $0.c]}
+			
+			let vertexLocationString = vertices.map{$0.point}
+				.map{"v \($0.x) \($0.y) \($0.z)"}
+				.joined(separator: "\n")
+			
+			let vertexNormalString = vertices.map{$0.normal}
+				.map{"vn \($0.x) \($0.y) \($0.z)"}
+				.joined(separator: "\n")
+			
+			let vertexTextureCoordinateString = vertices.map{$0.textureCoordinate}
+				.map{"vt \($0.u) \($0.v)"}
+				.joined(separator: "\n")
+			
+			dataString.append(vertexLocationString)
+			dataString.append("\n")
+			dataString.append(vertexNormalString)
+			dataString.append("\n")
+			dataString.append(vertexTextureCoordinateString)
+			dataString.append("\n")
+			
+			var currentMaterial = ""
+			
+			for (index, triangle) in triangles.enumerated()
+			{
+				if currentMaterial != triangle.material.name
+				{
+					currentMaterial = triangle.material.name
+					dataString.append("usemtl \(currentMaterial)\n")
+					dataString.append("s 1")
+				}
+				let first = index * 3 + offset
+				let second = first + 1
+				let third = second + 1
+				dataString.append("f \(first)/\(first)/\(first) \(second)/\(second)/\(second) \(third)/\(third)/\(third)\n")
+			}
+			
+			offset += triangles.count * 3
+		}
+		
+		let materials = scene.objects.flatMap{$0.materials}.distinct()
+		
+		let materialShaders = NSMutableDictionary()
+		
+		for material in materials
+		{
+			materialShaders[material.name] = (material.shader as? ShaderEncoding)?.encoded
+		}
+		
+		let encodedShaders:Data
+		encodedShaders = NSKeyedArchiver.archivedData(withRootObject: materialShaders)
+		
+		guard let wavefrontData = dataString.data(using: .ascii) else { fatalError("unable to encode data string") }
+		return (wavefrontData: wavefrontData, materialData: encodedShaders)
+	}
+}
+
+

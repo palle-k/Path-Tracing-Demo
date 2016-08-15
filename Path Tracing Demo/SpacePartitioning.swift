@@ -196,230 +196,141 @@ class OctreeTriangleStore : TriangleStore, CustomStringConvertible
 			let minY = volume.y
 			let minZ = volume.z
 			
+			let points = triangles.flatMap{[$0.a.point, $0.b.point, $0.c.point]}
+			
+			let splitX = (points.map{$0.x}.kthSmallestElement(points.count / 2) + minX + volume.width  * 0.5) * 0.5
+			let splitY = (points.map{$0.y}.kthSmallestElement(points.count / 2) + minY + volume.height * 0.5) * 0.5
+			let splitZ = (points.map{$0.z}.kthSmallestElement(points.count / 2) + minZ + volume.depth  * 0.5) * 0.5
+
+//			let splitX = minX + volume.width * 0.5
+//			let splitY = minY + volume.height * 0.5
+//			let splitZ = minZ + volume.depth * 0.5
+			
+			let lowerWidth = splitX - minX
+			let lowerHeight = splitY - minY
+			let lowerDepth = splitZ - minZ
+			
+			let upperWidth = volume.width - lowerWidth
+			let upperHeight = volume.height - lowerHeight
+			let upperDepth = volume.depth - lowerDepth
+			
 			let lllBounds = OctreeTriangleStore.Volume(
 				x: minX,
 				y: minY,
 				z: minZ,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				width:  lowerWidth,
+				height: lowerHeight,
+				depth:  lowerDepth)
 			let llgBounds = OctreeTriangleStore.Volume(
 				x: minX,
 				y: minY,
-				z: minZ + volume.depth * 0.5,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				z: splitZ,
+				width:  lowerWidth,
+				height: lowerHeight,
+				depth:  upperDepth)
 			let lglBounds = OctreeTriangleStore.Volume(
 				x: minX,
-				y: minY + volume.height * 0.5,
+				y: splitY,
 				z: minZ,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				width:  lowerWidth,
+				height: upperHeight,
+				depth:  lowerDepth)
 			let lggBounds = OctreeTriangleStore.Volume(
 				x: minX,
-				y: minY + volume.height * 0.5,
-				z: minZ + volume.depth * 0.5,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				y: splitY,
+				z: splitZ,
+				width:  lowerWidth,
+				height: upperHeight,
+				depth:  upperDepth)
 			let gllBounds = OctreeTriangleStore.Volume(
-				x: minX + volume.width * 0.5,
+				x: splitX,
 				y: minY,
 				z: minZ,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				width:  upperWidth,
+				height: lowerHeight,
+				depth:  lowerDepth)
 			let glgBounds = OctreeTriangleStore.Volume(
-				x: minX + volume.width * 0.5,
+				x: splitX,
 				y: minY,
-				z: minZ + volume.depth * 0.5,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				z: splitZ,
+				width:  upperWidth,
+				height: lowerHeight,
+				depth:  upperDepth)
 			let gglBounds = OctreeTriangleStore.Volume(
-				x: minX + volume.width * 0.5,
-				y: minY + volume.height * 0.5,
+				x: splitX,
+				y: splitY,
 				z: minZ,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				width:  upperWidth,
+				height: upperHeight,
+				depth:  lowerDepth)
 			let gggBounds = OctreeTriangleStore.Volume(
-				x: minX + volume.width * 0.5,
-				y: minY + volume.height * 0.5,
-				z: minZ + volume.depth * 0.5,
-				width: volume.width * 0.5,
-				height: volume.height * 0.5,
-				depth: volume.depth * 0.5)
+				x: splitX,
+				y: splitY,
+				z: splitZ,
+				width:  upperWidth,
+				height: upperHeight,
+				depth:  upperDepth)
+			
+			let volumeContainsTriangle:(Triangle3D, Volume) -> Bool =
+			{ triangle, volume -> Bool in
+				if (triangle.points.map{volume.contains(point: $0)}.reduce(false){$0 || $1})
+				{
+					return true
+				}
+				else if volume.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
+				{
+					return true
+				}
+				else if volume.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
+				{
+					return true
+				}
+				else if volume.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
+				{
+					return true
+				}
+				return false
+			}
 			
 			let lllBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{lllBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if lllBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if lllBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if lllBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, lllBounds)
 				}
 			let llgBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{llgBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if llgBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if llgBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if llgBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, llgBounds)
 				}
 			let lglBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{lglBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if lglBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if lglBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if lglBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, lglBounds)
 				}
 			let lggBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{lggBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if lggBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if lggBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if lggBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, lggBounds)
 				}
 			let gllBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{gllBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if gllBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if gllBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if gllBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, gllBounds)
 				}
 			let glgBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{glgBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if glgBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if glgBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if glgBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, glgBounds)
 				}
 			let gglBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{gglBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if gglBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if gglBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if gglBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, gglBounds)
 				}
 			let gggBucket:[Triangle3D] = triangles
 				.filter
 				{ triangle -> Bool in
-					if (triangle.points.map{gggBounds.contains(point: $0)}.reduce(false){$0 || $1})
-					{
-						return true
-					}
-					else if gggBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.b.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if gggBounds.intersects(ray: Ray3D(base: triangle.a.point, direction: triangle.c.point - triangle.a.point), strict: true)
-					{
-						return true
-					}
-					else if gggBounds.intersects(ray: Ray3D(base: triangle.b.point, direction: triangle.c.point - triangle.b.point), strict: true)
-					{
-						return true
-					}
-					return false
+					return volumeContainsTriangle(triangle, gggBounds)
 				}
 			
 			let buckets			= [lllBucket, llgBucket, lglBucket, lggBucket, gllBucket, glgBucket, gglBucket, gggBucket]
@@ -612,159 +523,34 @@ class OctreeTriangleStore : TriangleStore, CustomStringConvertible
 		
 		private var description: String
 		{
-			var lllDescription:String
+			var descriptions = [String](repeating: "", count: 8)
 			
-			switch lll
+			for (index, (node, name)) in [(lll, "lll"), (llg, "llg"), (lgl, "lgl"), (lgg, "lgg"), (gll, "gll"), (glg, "glg"), (ggl, "ggl"), (ggg, "ggg")].enumerated()
 			{
-			case .none:
-				lllDescription = "none"
-				break
-			case .inner(let innerNode):
-				lllDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				lllDescription = "\(triangleString)"
+				var description:String
+				
+				switch node
+				{
+				case .none:
+					description = "none"
+					break
+				case .inner(let innerNode):
+					description = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
+					break
+				case .leaf(let triangles):
+					let triangleString:String = triangles
+						.map{$0.description}
+						.joined(separator: "\n")
+						.replacingOccurrences(of: "\n", with: "\n\t")
+					description = "\(triangleString)"
+				}
+				
+				descriptions[index] = "\t\(name):\n\t\t\(description.replacingOccurrences(of: "\n", with: "\n\t"))"
 			}
 			
-			var llgDescription:String
+			let combinedDescriptions = descriptions.joined(separator: "\n")
 			
-			switch llg
-			{
-			case .none:
-				llgDescription = "none"
-				break
-			case .inner(let innerNode):
-				llgDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				llgDescription = "\(triangleString)"
-			}
-			
-			var lglDescription:String
-			
-			switch lgl
-			{
-			case .none:
-				lglDescription = "none"
-				break
-			case .inner(let innerNode):
-				lglDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				lglDescription = "\(triangleString)"
-			}
-			
-			var lggDescription:String
-			
-			switch lgg
-			{
-			case .none:
-				lggDescription = "none"
-				break
-			case .inner(let innerNode):
-				lggDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				lggDescription = "\(triangleString)"
-			}
-			
-			var gllDescription:String
-			
-			switch gll
-			{
-			case .none:
-				gllDescription = "none"
-				break
-			case .inner(let innerNode):
-				gllDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				gllDescription = "\(triangleString)"
-			}
-			
-			var glgDescription:String
-			
-			switch glg
-			{
-			case .none:
-				glgDescription = "none"
-				break
-			case .inner(let innerNode):
-				glgDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				glgDescription = "\(triangleString)"
-			}
-			
-			var gglDescription:String
-			
-			switch ggl
-			{
-			case .none:
-				gglDescription = "none"
-				break
-			case .inner(let innerNode):
-				gglDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				gglDescription = "\(triangleString)"
-			}
-			
-			var gggDescription:String
-			
-			switch ggg
-			{
-			case .none:
-				gggDescription = "none"
-				break
-			case .inner(let innerNode):
-				gggDescription = innerNode.description.replacingOccurrences(of: "\n", with: "\n\t")
-				break
-			case .leaf(let triangles):
-				let triangleString:String = triangles
-					.map{$0.description}
-					.joined(separator: "\n")
-					.replacingOccurrences(of: "\n", with: "\n\t")
-				gggDescription = "\(triangleString)"
-			}
-			
-			return "Inner Node (\(volume)):"
-				+ "\n\tlll:\n\t\t\(lllDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tllg:\n\t\t\(llgDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tlgl:\n\t\t\(lglDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tlgg:\n\t\t\(lggDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tgll:\n\t\t\(gllDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tglg:\n\t\t\(glgDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tggl:\n\t\t\(gglDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
-				+ "\n\tggg:\n\t\t\(gggDescription.replacingOccurrences(of: "\n", with: "\n\t"))"
+			return "Inner Node (\(volume)):\n\(combinedDescriptions)"
 		}
 	}
 	
@@ -975,8 +761,6 @@ class BSPTriangleStore: TriangleStore, CustomStringConvertible
 			}
 			else
 			{
-				
-				
 				let nextSplit: SplittingPlaneOrientation
 				
 				if lowerDX > lowerDY && lowerDX > lowerDZ

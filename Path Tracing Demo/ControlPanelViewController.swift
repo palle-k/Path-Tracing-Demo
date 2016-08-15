@@ -24,6 +24,7 @@
 //
 
 import Cocoa
+import QuartzCore
 
 class ControlPanelViewController: NSViewController, WavefrontModelImporterMaterialDataSource
 {
@@ -42,8 +43,6 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 	
 	@IBOutlet weak var txtRenderWidth: NSTextField!
 	@IBOutlet weak var txtRenderHeight: NSTextField!
-	
-	@IBOutlet weak var cbxPathTracingUsePreview: NSButton!
 	
 	@IBOutlet weak var btnStart: NSButton!
 	@IBOutlet weak var btnStop: NSButton!
@@ -92,14 +91,14 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		guard openPanel.runModal() == NSFileHandlingPanelOKButton else { return }
 		guard let url = openPanel.url else { return }
 		
-		piSceneImportProgress.startAnimation(self)
+		piSceneImportProgress.isHidden = false
 		
 		DispatchQueue.global().async
 		{
 			self.materials = [:]
 			self.objectLoader = WavefrontModelImporter()
 			self.objectLoader.materialDataSource = self
-			
+			self.objectLoader.progress.addObserver(self, forKeyPath: "fractionCompleted", options: [], context: nil)
 			guard let objects = try? self.objectLoader.import(from: url) else { return }
 			
 			ApplicationDelegate.scene = Scene3D(objects: objects, camera: self.camera, ambientColor: Color(withRed: 0.0209043, green: 0.0209043, blue: 0.0209043, alpha: 1.0))
@@ -107,6 +106,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 			DispatchQueue.main.async
 			{
 				self.piSceneImportProgress.stopAnimation(self)
+				self.piSceneImportProgress.isHidden = true
 			}
 		}
 	}
@@ -140,5 +140,98 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 			materials[name] = Material(withShader: DefaultShader(color: .white()), named: name)
 		}
 		return materials[name]!
+	}
+	
+	@IBAction func saveScene(_ sender: AnyObject)
+	{
+		guard let scene = ApplicationDelegate.scene else { return }
+		let savePanel = NSSavePanel()
+		guard savePanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard let url = savePanel.url else { return }
+		DispatchQueue.global().async
+		{
+			let materialURL = url.appendingPathExtension("material")
+			let (_, materialData) = WavefrontModelExporter.export(scene: scene)
+			
+			do
+			{
+				try materialData.write(to: materialURL, options: [.atomic])
+			}
+			catch
+			{
+				print(error)
+				DispatchQueue.main.async
+				{
+					let alert = NSAlert(error: error)
+					alert.runModal()
+				}
+			}
+		}
+	}
+	
+	@IBAction func saveRender(_ sender: AnyObject)
+	{
+		guard let image = ApplicationDelegate.pathTracer?.result else { return }
+		let savePanel = NSSavePanel()
+		savePanel.allowedFileTypes = ["public.png"]
+		guard savePanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard let url = savePanel.url else { return }
+		
+		DispatchQueue.global().async
+		{
+			guard let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil)
+			else
+			{
+				DispatchQueue.main.async
+				{
+					let alert = NSAlert()
+					alert.alertStyle = .critical
+					alert.messageText = "Image could not be saved."
+					alert.informativeText = "Image destination could not be created."
+					alert.runModal()
+				}
+				return
+			}
+			CGImageDestinationAddImage(destination, image, nil)
+			guard CGImageDestinationFinalize(destination)
+			else
+			{
+				DispatchQueue.main.async
+				{
+					let alert = NSAlert()
+					alert.alertStyle = .critical
+					alert.messageText = "Image could not be saved."
+					alert.informativeText = "Image destination could not be finalized."
+					alert.runModal()
+				}
+				return
+			}
+		}
+	}
+	
+	private var lastReport = 0.0
+	
+	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?)
+	{
+		let time = CACurrentMediaTime()
+		guard time - lastReport > 0.016 else { return }
+		lastReport = time
+		
+		DispatchQueue.main.async
+		{
+			guard let keyPath = keyPath else { return }
+			
+			switch keyPath
+			{
+			case "fractionCompleted":
+				guard let progress = object as? Progress else { break }
+				self.piSceneImportProgress.minValue = 0.0
+				self.piSceneImportProgress.maxValue = 1.0
+				self.piSceneImportProgress.doubleValue = progress.fractionCompleted
+				break
+			default:
+				break
+			}
+		}
 	}
 }
