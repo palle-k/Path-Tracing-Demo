@@ -76,9 +76,6 @@ struct ExplicitTriangleMesh3D : Object3D
 	var transformed:[Triangle3D]
 	{
 		let rotationMatrix = Matrix(rotatingWithAlpha: rotation.alpha, beta: rotation.beta, gamma: rotation.gamma)
-		
-		//FIXME: Normal Rotation
-		
 		return triangles
 			.map
 			{

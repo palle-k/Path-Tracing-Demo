@@ -93,6 +93,8 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		
 		piSceneImportProgress.isHidden = false
 		
+		let camera = self.camera
+		
 		DispatchQueue.global().async
 		{
 			self.materials = [:]
@@ -101,7 +103,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 			self.objectLoader.progress.addObserver(self, forKeyPath: "fractionCompleted", options: [], context: nil)
 			guard let objects = try? self.objectLoader.import(from: url) else { return }
 			
-			ApplicationDelegate.scene = Scene3D(objects: objects, camera: self.camera, ambientColor: Color(withRed: 0.0209043, green: 0.0209043, blue: 0.0209043, alpha: 1.0))
+			ApplicationDelegate.scene = Scene3D(objects: objects, camera: camera, ambientColor: Color(withRed: 0.0209043, green: 0.0209043, blue: 0.0209043, alpha: 1.0))
 			
 			DispatchQueue.main.async
 			{
@@ -139,7 +141,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		{
 			materials[name] = Material(withShader: DefaultShader(color: .white()), named: name)
 		}
-		return materials[name]!
+		return materials[name]! //force unwrapping, as the code above guarantees non-nil value.
 	}
 	
 	@IBAction func saveScene(_ sender: AnyObject)
@@ -151,7 +153,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		DispatchQueue.global().async
 		{
 			let materialURL = url.appendingPathExtension("material")
-			let (_, materialData) = WavefrontModelExporter.export(scene: scene)
+			let materialData = WavefrontModelExporter.exportMaterials(of: scene)
 			
 			do
 			{

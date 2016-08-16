@@ -164,10 +164,10 @@ class ImageTexture: Texture
 		let ly = floorf(y)
 		let gy = ceilf(y)
 		
-		let flx = x - lx
-		let fgx = 1 - flx
-		let fly = y - ly
-		let fgy = 1 - fly
+		let fgx = x - lx
+		let flx = 1 - fgx
+		let fgy = y - ly
+		let fly = 1 - fgy
 		
 		let indexLL = (Int(lx) + width * Int(ly)) * 4
 		let indexGL = (Int(gx) + width * Int(ly)) * 4

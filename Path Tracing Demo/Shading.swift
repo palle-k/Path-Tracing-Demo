@@ -625,7 +625,7 @@ class RefractionShader: Shader
 			let base = point + transmissionRayDirection * 0.001
 			let ray = Ray3D(base: base, direction: transmissionRayDirection)
 			
-			transmittedColor = getTransmittedColor(ray: ray, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor, ambientColor: ambientColor, incoming: incoming)
+			transmittedColor = getTransmittedColor(ray: ray, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor * transmittance, ambientColor: ambientColor, incoming: incoming)
 		}
 		else
 		{
@@ -655,7 +655,7 @@ class RefractionShader: Shader
 			let reflectedBase = point + reflectionRayDirection * 0.001
 			let reflectedRay = Ray3D(base: reflectedBase, direction: reflectionRayDirection)
 			
-			reflectedColor = getReflectedColor(ray: reflectedRay, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor, ambientColor: ambientColor, incoming: incoming)
+			reflectedColor = getReflectedColor(ray: reflectedRay, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor * reflectance, ambientColor: ambientColor, incoming: incoming)
 		}
 		else
 		{

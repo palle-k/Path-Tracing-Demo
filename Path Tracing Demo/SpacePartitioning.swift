@@ -273,7 +273,7 @@ class OctreeTriangleStore : TriangleStore, CustomStringConvertible
 			
 			let volumeContainsTriangle:(Triangle3D, Volume) -> Bool =
 			{ triangle, volume -> Bool in
-				if (triangle.points.map{volume.contains(point: $0)}.reduce(false){$0 || $1})
+				if (triangle.points.map(volume.contains).reduce(false){$0 || $1})
 				{
 					return true
 				}
@@ -357,7 +357,7 @@ class OctreeTriangleStore : TriangleStore, CustomStringConvertible
 				distinctPoints[i] = distinct
 			}
 			
-			let innerNodeThreshold = 4
+			let innerNodeThreshold = 16
 			
 			if distinctPoints[0] && lllBucket.count > innerNodeThreshold && lllBucket.count < triangles.count
 			{

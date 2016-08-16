@@ -97,21 +97,21 @@ class WavefrontModelImporter: NSObject, ProgressReporting
 			if lineComponents[0] == "v"
 			{
 				guard lineComponents.count >= 4 else { continue }
-				let coordinates = lineComponents[1 ... 3].flatMap{Float($0)}
+				let coordinates = lineComponents[1 ... 3].flatMap(Float.init)
 				guard coordinates.count == 3 else { continue }
 				points.append(Point3D(x: coordinates[0], y: coordinates[1], z: coordinates[2]))
 			}
 			else if lineComponents[0] == "vn"
 			{
 				guard lineComponents.count >= 4 else { continue }
-				let coordinates = lineComponents[1 ... 3].flatMap{Float($0)}
+				let coordinates = lineComponents[1 ... 3].flatMap(Float.init)
 				guard coordinates.count == 3 else { continue }
 				normals.append(Vector3D(x: coordinates[0], y: coordinates[1], z: coordinates[2]))
 			}
 			else if lineComponents[0] == "vt"
 			{
 				guard lineComponents.count >= 3 else { continue }
-				let coordinates = lineComponents[1 ... 2].flatMap{Float($0)}
+				let coordinates = lineComponents[1 ... 2].flatMap(Float.init)
 				guard coordinates.count == 2 else { continue }
 				textureCoordinates.append(TextureCoordinate(u: coordinates[0], v: coordinates[1]))
 			}
@@ -312,6 +312,23 @@ class WavefrontModelExporter
 		
 		guard let wavefrontData = dataString.data(using: .ascii) else { fatalError("unable to encode data string") }
 		return (wavefrontData: wavefrontData, materialData: encodedShaders)
+	}
+	
+	class func exportMaterials(of scene: Scene3D) -> Data
+	{
+		let materials = scene.objects.flatMap{$0.materials}.distinct()
+		
+		let materialShaders = NSMutableDictionary()
+		
+		for material in materials
+		{
+			materialShaders[material.name] = (material.shader as? ShaderEncoding)?.encoded
+		}
+		
+		let encodedShaders:Data
+		encodedShaders = NSKeyedArchiver.archivedData(withRootObject: materialShaders)
+		
+		return encodedShaders
 	}
 }
 
