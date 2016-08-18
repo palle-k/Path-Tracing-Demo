@@ -26,5 +26,8 @@ makefile
 *.xccheckout
 *.xcscmblueprint
 
+## AppCode
+.idea/
+
 ## iOS Target
 PathTracing/
