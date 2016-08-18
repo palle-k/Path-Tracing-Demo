@@ -147,13 +147,22 @@ struct ExplicitTriangleMesh3D : Object3D
 //	}
 //}
 
-struct Camera
+class Camera
 {
 	var location: Point3D
 	var rotation: (alpha: Float, beta: Float, gamma: Float)
 	var apertureSize: Float
 	var focalDistance: Float
 	var fieldOfView: Float
+	
+	init(location: Point3D, rotation: (alpha: Float, beta: Float, gamma: Float), apertureSize: Float, focalDistance: Float, fieldOfView: Float)
+	{
+		self.location = location
+		self.rotation = rotation
+		self.apertureSize = apertureSize
+		self.focalDistance = focalDistance
+		self.fieldOfView = fieldOfView
+	}
 }
 
 struct Scene3D : CustomStringConvertible

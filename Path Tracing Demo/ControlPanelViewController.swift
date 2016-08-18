@@ -59,7 +59,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 	
 	private var environmentTexture: Texture?
 	
-	private var camera: Camera
+	private func loadCamera()
 	{
 		let x = txtCameraX.floatValue
 		let y = txtCameraY.floatValue
@@ -71,11 +71,17 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		let focalDistance: Float = txtCameraFocalLength.floatValue
 		let fieldOfView: Float = txtCameraFov.floatValue
 		
-		return Camera(location: Point3D(x: x, y: y, z: z),
-		              rotation: (alpha: alpha, beta: beta, gamma: gamma),
-		              apertureSize: apertureSize,
-		              focalDistance: focalDistance,
-		              fieldOfView: fieldOfView)
+		ApplicationDelegate.scene?.camera.location = Vector3D(x: x, y: y, z: z)
+		ApplicationDelegate.scene?.camera.rotation = (alpha: alpha, beta: beta, gamma: gamma)
+		ApplicationDelegate.scene?.camera.focalDistance = focalDistance
+		ApplicationDelegate.scene?.camera.apertureSize = apertureSize
+		ApplicationDelegate.scene?.camera.fieldOfView = fieldOfView
+		
+//		return Camera(location: Point3D(x: x, y: y, z: z),
+//		              rotation: (alpha: alpha, beta: beta, gamma: gamma),
+//		              apertureSize: apertureSize,
+//		              focalDistance: focalDistance,
+//		              fieldOfView: fieldOfView)
 	}
 	
     override func viewDidLoad()
@@ -95,8 +101,6 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		
 		piSceneImportProgress.isHidden = false
 		
-		let camera = self.camera
-		
 		DispatchQueue.global().async
 		{
 			self.materials = [:]
@@ -104,6 +108,8 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 			self.objectLoader.materialDataSource = self
 			self.objectLoader.progress.addObserver(self, forKeyPath: "fractionCompleted", options: [], context: nil)
 			guard let objects = try? self.objectLoader.import(from: url) else { return }
+			
+			let camera = Camera(location: Vector3DZero, rotation: (alpha: 0, beta: 0, gamma: 0), apertureSize: 0, focalDistance: 1, fieldOfView: 1)
 			
 			ApplicationDelegate.scene = Scene3D(objects: objects, camera: camera, environmentShader: EnvironmentShader(color: .black(), texture: self.environmentTexture))
 			
@@ -119,7 +125,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 	{
 		ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct().forEach{print($0)}
 		
-		ApplicationDelegate.scene?.camera = self.camera
+		loadCamera()
 		
 		let color = cwAmbientColor.color
 		ApplicationDelegate.scene?.environmentShader.color = Color(withRed: Float(color.redComponent), green: Float(color.greenComponent), blue: Float(color.blueComponent), alpha: Float(color.alphaComponent))

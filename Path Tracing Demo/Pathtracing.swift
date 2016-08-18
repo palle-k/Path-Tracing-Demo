@@ -49,6 +49,12 @@ private extension Int
 class PathTracer : PathTracingWorkerDelegate
 {
 	let scene:Scene3D
+	
+	lazy var triangleStore: TriangleStore =
+	{
+		return  OctreeTriangleStore(with: self.scene.triangles)
+	}()
+	
 	private var workers: [LocalPathTracingWorker] = []
 	private var context: CGContext!
 	private(set) var result: CGImage?
@@ -112,15 +118,13 @@ class PathTracer : PathTracingWorkerDelegate
 		workerQueue = DispatchQueue(label: "pathtracing.tracerays.workers", attributes: .concurrent)
 		managerQueue.async
 		{
-			let triangleStore = OctreeTriangleStore(with: self.scene.triangles)
-			//print(triangleStore)
 			self.workers = (0 ..< workerCount).map
 			{ index in
 				LocalPathTracingWorker(
 					queue: self.workerQueue,
 					totalSize: (width: width, height: height),
 					rayDepth: rayDepth,
-					triangles: triangleStore,
+					triangles: self.triangleStore,
 					samples: samples,
 					camera: self.scene.camera,
 					environmentShader: self.scene.environmentShader)
