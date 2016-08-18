@@ -57,6 +57,8 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 	private lazy var importSemaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
 	private var shaderIndex:[String: Shader] = [:]
 	
+	private var environmentTexture: Texture?
+	
 	private var camera: Camera
 	{
 		let x = txtCameraX.floatValue
@@ -103,7 +105,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 			self.objectLoader.progress.addObserver(self, forKeyPath: "fractionCompleted", options: [], context: nil)
 			guard let objects = try? self.objectLoader.import(from: url) else { return }
 			
-			ApplicationDelegate.scene = Scene3D(objects: objects, camera: camera, ambientColor: Color(withRed: 0.0209043, green: 0.0209043, blue: 0.0209043, alpha: 1.0))
+			ApplicationDelegate.scene = Scene3D(objects: objects, camera: camera, environmentShader: EnvironmentShader(color: .black(), texture: self.environmentTexture))
 			
 			DispatchQueue.main.async
 			{
@@ -120,7 +122,8 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		ApplicationDelegate.scene?.camera = self.camera
 		
 		let color = cwAmbientColor.color
-		ApplicationDelegate.scene?.ambientColor = Color(withRed: Float(color.redComponent), green: Float(color.greenComponent), blue: Float(color.blueComponent), alpha: Float(color.alphaComponent))
+		ApplicationDelegate.scene?.environmentShader.color = Color(withRed: Float(color.redComponent), green: Float(color.greenComponent), blue: Float(color.blueComponent), alpha: Float(color.alphaComponent))
+		ApplicationDelegate.scene?.environmentShader.texture = environmentTexture
 		
 		ApplicationDelegate.pathTracer?.traceRays(width: txtRenderWidth.integerValue,
 		                                          height: txtRenderHeight.integerValue,
@@ -213,16 +216,16 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 	
 	private var lastReport = 0.0
 	
-	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?)
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
 	{
 		let time = CACurrentMediaTime()
 		guard time - lastReport > 0.016 else { return }
 		lastReport = time
-		
+
 		DispatchQueue.main.async
 		{
 			guard let keyPath = keyPath else { return }
-			
+
 			switch keyPath
 			{
 			case "fractionCompleted":
@@ -236,4 +239,18 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 			}
 		}
 	}
+	
+	@IBAction func chooseEnvironmentTexture(_ sender: AnyObject)
+	{
+		let openPanel = NSOpenPanel()
+		openPanel.canChooseFiles = true
+		openPanel.canChooseDirectories = false
+		openPanel.allowsMultipleSelection = false
+		guard openPanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard let url = openPanel.url else { return }
+		guard let imageTexture = ImageTexture(contentsOf: url) else { return }
+		ApplicationDelegate.scene?.environmentShader.texture = imageTexture
+		environmentTexture = imageTexture
+	}
+	
 }

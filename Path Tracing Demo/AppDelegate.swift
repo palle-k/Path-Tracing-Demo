@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
 			self.pathTracer = PathTracer(withScene: scene)
 			DispatchQueue.main.async
 			{
-				NotificationCenter.default.post(name: "RenderResultViewUpdatePathTracer" as NSNotification.Name, object: nil)
+				NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RenderResultViewUpdatePathTracer"), object: nil)
 			}
 		}
 	}

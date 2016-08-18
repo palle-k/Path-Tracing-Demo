@@ -160,12 +160,12 @@ struct Scene3D : CustomStringConvertible
 {
 	var objects:[Object3D]
 	var camera: Camera
-	var ambientColor: Color
+	var environmentShader: EnvironmentShader
 	
 	var wavefrontString: String
 	{
-		let triangles = objects.map{$0.transformed}.flatten()
-		let vertices = triangles.map{[$0.a, $0.b, $0.c]}.flatten()
+		let triangles = objects.map{$0.transformed}.joined()
+		let vertices = triangles.map{[$0.a, $0.b, $0.c]}.joined()
 		let vertexString = vertices.map{"v \($0.point.x) \($0.point.y) \($0.point.z)"}.joined(separator: "\n")
 		let triangleString:String = triangles
 			.enumerated()
@@ -181,19 +181,19 @@ struct Scene3D : CustomStringConvertible
 		return "Scene3D:\n\(objects.map{$0.description}.joined(separator: "\n"))"
 	}
 	
-	var transformed: [Triangle3D]
+	var triangles: [Triangle3D]
 	{
-		let rotationMatrix = Matrix(rotatingWithAlpha: -camera.rotation.alpha, beta: -camera.rotation.beta, gamma: -camera.rotation.gamma)
+		//let rotationMatrix = Matrix(rotatingWithAlpha: -camera.rotation.alpha, beta: -camera.rotation.beta, gamma: -camera.rotation.gamma)
 		return objects
 			.flatMap{$0.transformed}
-			.map{ $0.translated(to: -camera.location) }
-			.map
-			{
-				Triangle3D(
-					a: Vertex3D(point: rotationMatrix * $0.a.point, normal: rotationMatrix * $0.a.normal, textureCoordinate: $0.a.textureCoordinate),
-					b: Vertex3D(point: rotationMatrix * $0.b.point, normal: rotationMatrix * $0.b.normal, textureCoordinate: $0.b.textureCoordinate),
-					c: Vertex3D(point: rotationMatrix * $0.c.point, normal: rotationMatrix * $0.c.normal, textureCoordinate: $0.c.textureCoordinate),
-					material: $0.material)
-			}
+//			.map{ $0.translated(to: -camera.location) }
+//			.map
+//			{
+//				Triangle3D(
+//					a: Vertex3D(point: rotationMatrix * $0.a.point, normal: rotationMatrix * $0.a.normal, textureCoordinate: $0.a.textureCoordinate),
+//					b: Vertex3D(point: rotationMatrix * $0.b.point, normal: rotationMatrix * $0.b.normal, textureCoordinate: $0.b.textureCoordinate),
+//					c: Vertex3D(point: rotationMatrix * $0.c.point, normal: rotationMatrix * $0.c.normal, textureCoordinate: $0.c.textureCoordinate),
+//					material: $0.material)
+//			}
 	}
 }

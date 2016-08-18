@@ -112,7 +112,7 @@ class PathTracer : PathTracingWorkerDelegate
 		workerQueue = DispatchQueue(label: "pathtracing.tracerays.workers", attributes: .concurrent)
 		managerQueue.async
 		{
-			let triangleStore = OctreeTriangleStore(with: self.scene.transformed)
+			let triangleStore = OctreeTriangleStore(with: self.scene.triangles)
 			//print(triangleStore)
 			self.workers = (0 ..< workerCount).map
 			{ index in
@@ -123,7 +123,7 @@ class PathTracer : PathTracingWorkerDelegate
 					triangles: triangleStore,
 					samples: samples,
 					camera: self.scene.camera,
-					ambientColor: self.scene.ambientColor)
+					environmentShader: self.scene.environmentShader)
 			}
 			
 			self.workers.forEach{$0.delegate = self}
@@ -166,7 +166,7 @@ class PathTracer : PathTracingWorkerDelegate
 		}
 	}
 	
-	private final func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
+	fileprivate final func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
 	{
 		managerQueue.async
 		{
@@ -196,7 +196,7 @@ class PathTracer : PathTracingWorkerDelegate
 				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
 			guard let regionImage = ctx?.makeImage() else { fatalError("Image could not be created") }
 			
-			self.context.draw(in: rect, image: regionImage)
+			self.context.draw(regionImage, in: rect)
 			
 			guard let image = self.context.makeImage() else { return }
 			
@@ -222,7 +222,7 @@ class PathTracer : PathTracingWorkerDelegate
 		}
 	}
 	
-	private func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
+	fileprivate func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
 	{
 		managerQueue.async
 		{
@@ -244,7 +244,7 @@ class PathTracer : PathTracingWorkerDelegate
 				width: region.size.width,
 				height: region.size.height)
 			
-			self.context.draw(in: rect, image: regionImage)
+			self.context.draw(regionImage, in: rect)
 			
 			guard let image = self.context.makeImage() else { return }
 			
@@ -290,7 +290,7 @@ private class LocalPathTracingWorker
 	private let camera: Camera
 	private let rayDepth: Int
 	private var shouldStop: Bool = false
-	private var ambientColor: Color
+	private var environmentShader: EnvironmentShader
 	
 	init(queue: DispatchQueue,
 	     totalSize: (width: Int, height: Int),
@@ -298,7 +298,7 @@ private class LocalPathTracingWorker
 	     triangles: TriangleStore,
 	     samples: Int,
 	     camera: Camera,
-	     ambientColor: Color)
+	     environmentShader: EnvironmentShader)
 	{
 		self.queue = queue
 		self.totalSize = totalSize
@@ -306,10 +306,10 @@ private class LocalPathTracingWorker
 		self.rayDepth = rayDepth
 		self.samples = samples
 		self.camera = camera
-		self.ambientColor = ambientColor
+		self.environmentShader = environmentShader
 	}
 	
-	private final func render(region: (location: (x: Int, y: Int), size: (width: Int, height: Int)))
+	fileprivate final func render(region: (location: (x: Int, y: Int), size: (width: Int, height: Int)))
 	{
 		idle = false
 		queue.async
@@ -320,6 +320,8 @@ private class LocalPathTracingWorker
 			let horizontalScaleFactor = 1.0 / Float(self.totalSize.height) * Float(self.totalSize.width)
 			
 			let fovScalingFactor = tanf(self.camera.fieldOfView * 0.5)
+			
+			let rotationMatrix = Matrix(rotatingWithAlpha: self.camera.rotation.alpha, beta: self.camera.rotation.beta, gamma: self.camera.rotation.gamma)
 			
 			for y in region.location.y ..< (region.location.y + region.size.height)
 			{
@@ -342,8 +344,10 @@ private class LocalPathTracingWorker
 						let rayDirectionX = (offsetX / Float(self.totalSize.width) + 0.5) * horizontalScaleFactor * fovScalingFactor - rayOffsetX
 						let rayDirectionY = (offsetY / Float(self.totalSize.height) - 0.5) * fovScalingFactor - rayOffsetY
 						
-						let ray = Ray3D(base: Vector3D(x: baseOffsetX, y: 0, z: baseOffsetY),
-						                direction: Vector3D(x: rayDirectionX, y: 1, z: rayDirectionY).normalized)
+						let rayBase = rotationMatrix * Vector3D(x: baseOffsetX, y: 0, z: baseOffsetY) + self.camera.location
+						let rayDirection = rotationMatrix * Vector3D(x: rayDirectionX, y: 1, z: rayDirectionY).normalized
+						let ray = Ray3D(base: rayBase,
+						                direction: rayDirection)
 						
 						let closestIntersection = self.triangles.nearestIntersectingTriangle(forRay: ray)
 						
@@ -355,7 +359,7 @@ private class LocalPathTracingWorker
 								point: ray.point(for: intersection.ray),
 								rayDirection: ray.direction,
 								sceneGeometry: self.triangles,
-								ambientColor: self.ambientColor,
+								environmentShader: self.environmentShader,
 								previousColor: .white(),
 								maximumRayDepth: self.rayDepth)
 							
@@ -363,7 +367,15 @@ private class LocalPathTracingWorker
 							color.green += sampleColor.green
 							color.blue += sampleColor.blue
 							color.alpha += sampleColor.alpha
+						}
+						else
+						{
+							let sampleColor = self.environmentShader.environmentColor(for: ray.direction)
 							
+							color.red += sampleColor.red
+							color.green += sampleColor.green
+							color.blue += sampleColor.blue
+							color.alpha += sampleColor.alpha
 						}
 					}
 					

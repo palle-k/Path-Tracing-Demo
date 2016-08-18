@@ -118,7 +118,7 @@ class ImageTexture: Texture
 		{
 			return nil
 		}
-		ctx.draw(in: CGRect(x: 0, y: 0, width: width, height: height), image: image)
+		ctx.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
 	}
 	
 	init(with data: [UInt8], width: Int, height: Int)
@@ -147,8 +147,8 @@ class ImageTexture: Texture
 	@inline(__always)
 	private func rangeLimited(_ textureCoordinate: TextureCoordinate) -> TextureCoordinate
 	{
-		let u = fmodf(fmodf(textureCoordinate.u, 1.0) + 1.0, 1.0)
-		let v = fmodf(fmodf(textureCoordinate.v, 1.0) + 1.0, 1.0)
+		let u = textureCoordinate.u - floorf(textureCoordinate.u)
+		let v = textureCoordinate.v - floorf(textureCoordinate.v)
 		
 		return TextureCoordinate(u: u, v: v)
 	}

@@ -311,6 +311,11 @@ class RefractionShaderEditorViewController: ShaderEditorViewController, ColorTex
 	}
 }
 
+class SubsurfaceScatteringShaderViewController: ShaderEditorViewController, NSTextFieldDelegate
+{
+	
+}
+
 class AddShaderEditorViewController: ShaderEditorViewController, ShaderChooserDelegate
 {
 	override func viewDidAppear()

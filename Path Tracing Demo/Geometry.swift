@@ -262,9 +262,9 @@ extension Triangle3D : Equatable { }
 
 //MARK: Operator Declarations
 
-infix operator ⨯ { associativity left precedence 200 }
-infix operator <-> { associativity left precedence 200 }
-infix operator  ∠ { associativity left precedence 200 }
+infix operator ⨯ : MultiplicationPrecedence
+infix operator <-> : MultiplicationPrecedence
+infix operator  ∠ : MultiplicationPrecedence
 
 //MARK: Vector to Vector Real Arithmetic
 

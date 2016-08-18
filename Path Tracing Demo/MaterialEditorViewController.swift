@@ -31,14 +31,14 @@ class MaterialEditorViewController: NSViewController
 	@IBOutlet weak var materialList: NSTableView!
 	@IBOutlet weak var shaderContainerView: NSView!
 	
-	private lazy var materials:[Material] = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct().sorted{$0.name < $1.name} ?? []
+	fileprivate lazy var materials:[Material] = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct().sorted{$0.name < $1.name} ?? []
 	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		materialList.delegate = self
 		materialList.dataSource = self
-		NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: "RenderResultViewUpdatePathTracer" as NSNotification.Name, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: Notification.Name(rawValue: "RenderResultViewUpdatePathTracer") as NSNotification.Name, object: nil)
 	}
 	
 	override func viewDidAppear()
@@ -97,6 +97,6 @@ extension MaterialEditorViewController: ShaderChooserDelegate
 	{
 		let selectedIndex = materialList.selectedRow
 		guard selectedIndex >= 0 else { return }
-		materials[selectedIndex].shader = chooser.shader
+		self.materials[selectedIndex].shader = chooser.shader
 	}
 }

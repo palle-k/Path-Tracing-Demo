@@ -32,7 +32,7 @@ class RenderResultViewController: NSViewController, PathTracerDelegate
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(pathTracerUpdated(notification:)), name: "RenderResultViewUpdatePathTracer" as NSNotification.Name, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(pathTracerUpdated(notification:)), name: Notification.Name(rawValue: "RenderResultViewUpdatePathTracer"), object: nil)
 	}
 
 	func pathTracingDidFinish(render: CGImage)

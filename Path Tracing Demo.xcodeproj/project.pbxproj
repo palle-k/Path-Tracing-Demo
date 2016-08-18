@@ -50,6 +50,9 @@
 		E692583A1D4EE4B100A77195 /* Shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69258381D4EE4B100A77195 /* Shading.swift */; };
 		E692583C1D4EEDFD00A77195 /* SpacePartitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */; };
 		E692583D1D4EEDFD00A77195 /* SpacePartitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */; };
+		E6D0EFB01D63B57A00B89067 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0EFAF1D63B57A00B89067 /* PriorityQueue.swift */; };
+		E6D0EFB11D63B57A00B89067 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0EFAF1D63B57A00B89067 /* PriorityQueue.swift */; };
+		E6D0EFB21D63B57A00B89067 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0EFAF1D63B57A00B89067 /* PriorityQueue.swift */; };
 		E6F44A801D59855D00C2FAD2 /* ShaderChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F44A7E1D59855D00C2FAD2 /* ShaderChooserViewController.swift */; };
 		E6F44A831D59877700C2FAD2 /* ShaderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F44A821D59877700C2FAD2 /* ShaderEditorViewController.swift */; };
 /* End PBXBuildFile section */
@@ -111,6 +114,7 @@
 		E664E3A01D5300390032AACA /* mesh2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mesh2.obj; sourceTree = "<group>"; };
 		E69258381D4EE4B100A77195 /* Shading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shading.swift; sourceTree = "<group>"; };
 		E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacePartitioning.swift; sourceTree = "<group>"; };
+		E6D0EFAF1D63B57A00B89067 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
 		E6F44A7E1D59855D00C2FAD2 /* ShaderChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderChooserViewController.swift; sourceTree = "<group>"; };
 		E6F44A821D59877700C2FAD2 /* ShaderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderEditorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -213,6 +217,7 @@
 				E69258381D4EE4B100A77195 /* Shading.swift */,
 				E658FB871D4C245500C7628D /* Pathtracing.swift */,
 				E692583B1D4EEDFD00A77195 /* SpacePartitioning.swift */,
+				E6D0EFAF1D63B57A00B89067 /* PriorityQueue.swift */,
 			);
 			name = "Path Tracing";
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				E64D253F1D4D8C8C00445C30 /* Geometry.swift in Sources */,
 				E61F1B2F1D542CE2008BD216 /* Textures.swift in Sources */,
 				E64D25401D4D8C8E00445C30 /* Pathtracing.swift in Sources */,
+				E6D0EFB11D63B57A00B89067 /* PriorityQueue.swift in Sources */,
 				E692583D1D4EEDFD00A77195 /* SpacePartitioning.swift in Sources */,
 				E692583A1D4EE4B100A77195 /* Shading.swift in Sources */,
 			);
@@ -390,6 +396,7 @@
 				E658FB881D4C245500C7628D /* Pathtracing.swift in Sources */,
 				E64D25421D4D98EE00445C30 /* Matrix.swift in Sources */,
 				E61F1B2E1D542CE2008BD216 /* Textures.swift in Sources */,
+				E6D0EFB01D63B57A00B89067 /* PriorityQueue.swift in Sources */,
 				E61433151D4E8B2D00D0CF34 /* MeshImport.swift in Sources */,
 				E65F397C1D5E9CF200CA8F41 /* ControlPanelViewController.swift in Sources */,
 				E658FB861D4B87AF00C7628D /* Geometry.swift in Sources */,
@@ -414,6 +421,7 @@
 				E664E3981D52FF2A0032AACA /* Matrix.swift in Sources */,
 				E664E39C1D52FF390032AACA /* Pathtracing.swift in Sources */,
 				E61F1B301D542CE2008BD216 /* Textures.swift in Sources */,
+				E6D0EFB21D63B57A00B89067 /* PriorityQueue.swift in Sources */,
 				E664E38A1D52FF1E0032AACA /* ViewController.swift in Sources */,
 				E664E3971D52FF280032AACA /* Geometry.swift in Sources */,
 				E664E3991D52FF2D0032AACA /* MeshImport.swift in Sources */,
@@ -634,6 +642,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = PathTracing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

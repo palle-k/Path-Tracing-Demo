@@ -221,7 +221,9 @@ let Matrix3x3Identity = Matrix(rows: [[1,0,0],[0,1,0],[0,0,1]])
 
 func == (left: Matrix, right: Matrix) -> Bool
 {
-	return left.rows == right.rows
+	return left.width == right.width &&
+		left.height == right.height &&
+		Array<Float>(left.rows.joined()) == Array<Float>(right.rows.joined())
 }
 
 #if os(watchOS)

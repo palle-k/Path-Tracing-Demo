@@ -169,14 +169,14 @@ class DefaultShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	required init?(coder aDecoder: NSCoder)
 	{
-		let color = self.dynamicType.decodeColor(named: "shader_color", with: aDecoder)
+		let color = type(of: self).decodeColor(named: "shader_color", with: aDecoder)
 		let texture = aDecoder.decodeObject(forKey: "texture") as? TextureDecoder
 		shader = DefaultShader(color: color, texture: texture?.decoded)
 	}
 	
 	func encode(with aCoder: NSCoder)
 	{
-		self.dynamicType.encode(color: shader.color, named: "shader_color", with: aCoder)
+		type(of: self).encode(color: shader.color, named: "shader_color", with: aCoder)
 		aCoder.encode((shader.texture as? TextureEncoding)?.encoded, forKey: "texture")
 	}
 	
@@ -205,14 +205,14 @@ class DiffuseShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	required init?(coder aDecoder: NSCoder)
 	{
-		let color = self.dynamicType.decodeColor(named: "shader_color", with: aDecoder)
+		let color = type(of: self).decodeColor(named: "shader_color", with: aDecoder)
 		let texture = aDecoder.decodeObject(forKey: "texture") as? TextureDecoder
 		shader = DiffuseShader(color: color, texture: texture?.decoded)
 	}
 	
 	func encode(with aCoder: NSCoder)
 	{
-		self.dynamicType.encode(color: shader.color, named: "shader_color", with: aCoder)
+		type(of: self).encode(color: shader.color, named: "shader_color", with: aCoder)
 		aCoder.encode((shader.texture as? TextureEncoding)?.encoded, forKey: "texture")
 	}
 	
@@ -241,7 +241,7 @@ class EmissionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	required init?(coder aDecoder: NSCoder)
 	{
-		let color = self.dynamicType.decodeColor(named: "shader_color", with: aDecoder)
+		let color = type(of: self).decodeColor(named: "shader_color", with: aDecoder)
 		let texture = aDecoder.decodeObject(forKey: "texture") as? TextureDecoder
 		let strength = aDecoder.decodeFloat(forKey: "strength")
 		shader = EmissionShader(strength: strength, color: color, texture: texture?.decoded)
@@ -249,7 +249,7 @@ class EmissionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	func encode(with aCoder: NSCoder)
 	{
-		self.dynamicType.encode(color: shader.color, named: "shader_color", with: aCoder)
+		type(of: self).encode(color: shader.color, named: "shader_color", with: aCoder)
 		aCoder.encode((shader.texture as? TextureEncoding)?.encoded, forKey: "texture")
 		aCoder.encode(shader.strength, forKey: "strength")
 	}
@@ -279,7 +279,7 @@ class ReflectionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	required init?(coder aDecoder: NSCoder)
 	{
-		let color = self.dynamicType.decodeColor(named: "shader_color", with: aDecoder)
+		let color = type(of: self).decodeColor(named: "shader_color", with: aDecoder)
 		let texture = aDecoder.decodeObject(forKey: "texture") as? TextureDecoder
 		let roughness = aDecoder.decodeFloat(forKey: "roughness")
 		shader = ReflectionShader(color: color, roughness: roughness, texture: texture?.decoded)
@@ -287,7 +287,7 @@ class ReflectionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	func encode(with aCoder: NSCoder)
 	{
-		self.dynamicType.encode(color: shader.color, named: "shader_color", with: aCoder)
+		type(of: self).encode(color: shader.color, named: "shader_color", with: aCoder)
 		aCoder.encode((shader.texture as? TextureEncoding)?.encoded, forKey: "texture")
 		aCoder.encode(shader.roughness, forKey: "roughness")
 	}
@@ -317,7 +317,7 @@ class RefractionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	required init?(coder aDecoder: NSCoder)
 	{
-		let color = self.dynamicType.decodeColor(named: "shader_color", with: aDecoder)
+		let color = type(of: self).decodeColor(named: "shader_color", with: aDecoder)
 		let texture = aDecoder.decodeObject(forKey: "texture") as? TextureDecoder
 		let roughness = aDecoder.decodeFloat(forKey: "roughness")
 		let ior = aDecoder.decodeFloat(forKey: "ior")
@@ -326,7 +326,7 @@ class RefractionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 		
 		if aDecoder.containsValue(forKey: "volume_color_red")
 		{
-			volumeColor = self.dynamicType.decodeColor(named: "volume_color", with: aDecoder)
+			volumeColor = type(of: self).decodeColor(named: "volume_color", with: aDecoder)
 		}
 		else
 		{
@@ -349,11 +349,11 @@ class RefractionShaderEncoder: NSObject, ShaderDecoder, ShaderEncoder
 	
 	func encode(with aCoder: NSCoder)
 	{
-		self.dynamicType.encode(color: shader.color, named: "shader_color", with: aCoder)
+		type(of: self).encode(color: shader.color, named: "shader_color", with: aCoder)
 		aCoder.encode((shader.texture as? TextureEncoding)?.encoded, forKey: "texture")
 		aCoder.encode(shader.roughness, forKey: "roughness")
 		aCoder.encode(shader.indexOfRefraction, forKey: "ior")
-		self.dynamicType.encode(color: shader.volumeColor, named: "volume_color", with: aCoder)
+		type(of: self).encode(color: shader.volumeColor, named: "volume_color", with: aCoder)
 		aCoder.encode(shader.absorptionStrength, forKey: "absorption_strength")
 	}
 	

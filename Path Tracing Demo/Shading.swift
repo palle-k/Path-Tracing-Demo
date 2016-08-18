@@ -263,7 +263,7 @@ protocol Shader: class
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 }
@@ -306,7 +306,7 @@ class DefaultShader: Shader
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -345,7 +345,7 @@ class DiffuseShader: Shader
 	           at barycentricIntersectionCoordinates: BarycentricPoint,
 	           point: Point3D, rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -371,14 +371,14 @@ class DiffuseShader: Shader
 			if maximumRayDepth > 0
 			{
 				let nextColor = nextIntersection.triangle.material.shader.color(
-					forTriangle:	 nextIntersection.triangle,
-					at:				 nextIntersection.barycentricIntersection,
-					point:			 ray.point(for: nextIntersection.ray),
-					rayDirection:	 outgoingRayDirection,
-					sceneGeometry:	 sceneGeometry,
-					ambientColor:	 ambientColor,
-					previousColor:	 previousColor * color,
-					maximumRayDepth: maximumRayDepth - 1)
+					forTriangle:	   nextIntersection.triangle,
+					at:				   nextIntersection.barycentricIntersection,
+					point:			   ray.point(for: nextIntersection.ray),
+					rayDirection:	   outgoingRayDirection,
+					sceneGeometry:	   sceneGeometry,
+					environmentShader: environmentShader,
+					previousColor:	   previousColor * color,
+					maximumRayDepth:   maximumRayDepth - 1)
 				return nextColor * color
 			}
 			else
@@ -388,7 +388,7 @@ class DiffuseShader: Shader
 		}
 		else
 		{
-			return ambientColor * color
+			return environmentShader.environmentColor(for: outgoingRayDirection) * color
 		}
 	}
 }
@@ -400,7 +400,6 @@ extension DiffuseShader: CustomStringConvertible
 		return "DiffuseShader (color: \(color), texture: \(texture))"
 	}
 }
-
 
 class EmissionShader: Shader
 {
@@ -419,7 +418,7 @@ class EmissionShader: Shader
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -455,7 +454,7 @@ class ReflectionShader: Shader
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -498,14 +497,14 @@ class ReflectionShader: Shader
 			if maximumRayDepth > 0
 			{
 				let nextColor = nextIntersection.triangle.material.shader.color(
-					forTriangle: nextIntersection.triangle,
-					at: nextIntersection.barycentricIntersection,
-					point: ray.point(for: nextIntersection.ray),
-					rayDirection: outgoingRayDirection,
-					sceneGeometry: sceneGeometry,
-					ambientColor: ambientColor,
-					previousColor: previousColor * color,
-					maximumRayDepth: maximumRayDepth - 1)
+					forTriangle:	   nextIntersection.triangle,
+					at:				   nextIntersection.barycentricIntersection,
+					point:			   ray.point(for: nextIntersection.ray),
+					rayDirection:      outgoingRayDirection,
+					sceneGeometry:	   sceneGeometry,
+					environmentShader: environmentShader,
+					previousColor:     previousColor * color,
+					maximumRayDepth:   maximumRayDepth - 1)
 				return nextColor * color
 			}
 			else
@@ -515,7 +514,7 @@ class ReflectionShader: Shader
 		}
 		else
 		{
-			return ambientColor * color
+			return environmentShader.environmentColor(for: outgoingRayDirection) * color
 		}
 	}
 }
@@ -555,7 +554,7 @@ class RefractionShader: Shader
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -625,7 +624,7 @@ class RefractionShader: Shader
 			let base = point + transmissionRayDirection * 0.001
 			let ray = Ray3D(base: base, direction: transmissionRayDirection)
 			
-			transmittedColor = getTransmittedColor(ray: ray, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor * transmittance, ambientColor: ambientColor, incoming: incoming)
+			transmittedColor = getTransmittedColor(ray: ray, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor * transmittance, environmentShader: environmentShader, incoming: incoming)
 		}
 		else
 		{
@@ -655,7 +654,7 @@ class RefractionShader: Shader
 			let reflectedBase = point + reflectionRayDirection * 0.001
 			let reflectedRay = Ray3D(base: reflectedBase, direction: reflectionRayDirection)
 			
-			reflectedColor = getReflectedColor(ray: reflectedRay, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor * reflectance, ambientColor: ambientColor, incoming: incoming)
+			reflectedColor = getReflectedColor(ray: reflectedRay, sceneGeometry: sceneGeometry, color: color, maximumRayDepth: maximumRayDepth, previousColor: color * previousColor * reflectance, environmentShader: environmentShader, incoming: incoming)
 		}
 		else
 		{
@@ -666,7 +665,7 @@ class RefractionShader: Shader
 	}
 	
 	@inline(__always)
-	private func getTransmittedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, ambientColor: Color, incoming: Bool) -> Color
+	private func getTransmittedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, environmentShader: EnvironmentShader, incoming: Bool) -> Color
 	{
 		if let nextIntersection = sceneGeometry.nearestIntersectingTriangle(forRay: ray)
 		{
@@ -678,7 +677,7 @@ class RefractionShader: Shader
 					point: ray.point(for: nextIntersection.ray),
 					rayDirection: ray.direction,
 					sceneGeometry: sceneGeometry,
-					ambientColor: ambientColor,
+					environmentShader: environmentShader,
 					previousColor: previousColor,
 					maximumRayDepth: maximumRayDepth - 1)
 				
@@ -703,12 +702,12 @@ class RefractionShader: Shader
 		}
 		else
 		{
-			return ambientColor * color
+			return environmentShader.environmentColor(for: ray.direction) * color
 		}
 	}
 	
 	@inline(__always)
-	private func getReflectedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, ambientColor: Color, incoming: Bool) -> Color
+	private func getReflectedColor(ray: Ray3D, sceneGeometry: TriangleStore, color: Color, maximumRayDepth: Int, previousColor: Color, environmentShader: EnvironmentShader, incoming: Bool) -> Color
 	{
 		if let nextIntersection = sceneGeometry.nearestIntersectingTriangle(forRay: ray)
 		{
@@ -720,7 +719,7 @@ class RefractionShader: Shader
 					point: ray.point(for: nextIntersection.ray),
 					rayDirection: ray.direction,
 					sceneGeometry: sceneGeometry,
-					ambientColor: ambientColor,
+					environmentShader: environmentShader,
 					previousColor: previousColor,
 					maximumRayDepth: maximumRayDepth - 1)
 				
@@ -745,7 +744,7 @@ class RefractionShader: Shader
 		}
 		else
 		{
-			return ambientColor * color
+			return environmentShader.environmentColor(for: ray.direction) * color
 		}
 	}
 }
@@ -755,6 +754,78 @@ extension RefractionShader: CustomStringConvertible
 	var description: String
 	{
 		return "RefractionShader (color: \(color), texture: \(texture), index of refraction: \(indexOfRefraction), roughness: \(roughness), depth attenuation color: \(volumeColor), depth attenuation strength: \(absorptionStrength))"
+	}
+}
+
+class SubsurfaceScatteringShader: Shader
+{
+	var color: Color
+	let texture: Texture?
+	var strength: Float
+	
+	
+	init(color: Color, strength: Float)
+	{
+		self.color = color
+		self.texture = nil
+		self.strength = strength
+	}
+	
+	func color(forTriangle triangle: Triangle3D,
+	           at barycentricIntersectionCoordinates: BarycentricPoint,
+	           point: Point3D,
+	           rayDirection: Vector3D,
+	           sceneGeometry: TriangleStore,
+	           environmentShader: EnvironmentShader,
+	           previousColor: Color,
+	           maximumRayDepth: Int) -> Color
+	{
+		
+		let color = self.textureColor(forTriangle: triangle, withIntersectionCoordinates: barycentricIntersectionCoordinates)
+		guard (color * previousColor).brightness > 0.001 else { return .black() }
+		
+		let normal  = triangle.a.normal * barycentricIntersectionCoordinates.alpha
+			+ triangle.b.normal * barycentricIntersectionCoordinates.beta
+			+ triangle.c.normal * barycentricIntersectionCoordinates.gamma
+		
+		var outgoingRayDirection = Vector3D(x: Float(drand48() * 2.0 - 1.0),
+		                                    y: Float(drand48() * 2.0 - 1.0),
+		                                    z: Float(drand48() * 2.0 - 1.0)).normalized
+		if outgoingRayDirection * normal > 0
+		{
+			outgoingRayDirection = -outgoingRayDirection
+		}
+		
+		var currentColor:Color = .white()
+		
+		for scatterCount in 1 ... maximumRayDepth
+		{
+			let base = point + outgoingRayDirection * 0.001
+			let ray = Ray3D(base: base, direction: outgoingRayDirection)
+			let nextScatterDistance = Float(drand48()) / strength
+			if let nextIntersection = sceneGeometry.nearestIntersectingTriangle(forRay: ray), nextIntersection.ray < nextScatterDistance
+			{
+				let nextColor = nextIntersection.triangle.material.shader.color(
+					forTriangle: nextIntersection.triangle,
+					at: nextIntersection.barycentricIntersection,
+					point: ray.point(for: nextIntersection.ray),
+					rayDirection: ray.direction,
+					sceneGeometry: sceneGeometry,
+					environmentShader: environmentShader,
+					previousColor: previousColor,
+					maximumRayDepth: maximumRayDepth - scatterCount)
+				
+				return currentColor * (((1.0 - nextIntersection.ray) * .white()) + (nextIntersection.ray * color)) * nextColor
+			}
+			
+			currentColor = currentColor * (((1.0 - nextScatterDistance * strength) * .white()) + (nextScatterDistance * strength * color))
+			
+			outgoingRayDirection = Vector3D(x: Float(drand48() * 2.0 - 1.0),
+											y: Float(drand48() * 2.0 - 1.0),
+											z: Float(drand48() * 2.0 - 1.0)).normalized
+		}
+		
+		return color
 	}
 }
 
@@ -776,7 +847,7 @@ class AddShader: Shader
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -785,7 +856,7 @@ class AddShader: Shader
 		                                  point: point,
 		                                  rayDirection: rayDirection,
 		                                  sceneGeometry: sceneGeometry,
-		                                  ambientColor: ambientColor,
+		                                  environmentShader: environmentShader,
 		                                  previousColor: previousColor,
 		                                  maximumRayDepth: maximumRayDepth)
 		
@@ -794,7 +865,7 @@ class AddShader: Shader
 		                                  point: point,
 		                                  rayDirection: rayDirection,
 		                                  sceneGeometry: sceneGeometry,
-		                                  ambientColor: ambientColor,
+		                                  environmentShader: environmentShader,
 		                                  previousColor: previousColor,
 		                                  maximumRayDepth: maximumRayDepth)
 		
@@ -833,7 +904,7 @@ class MixShader: Shader
 	           point: Point3D,
 	           rayDirection: Vector3D,
 	           sceneGeometry: TriangleStore,
-	           ambientColor: Color,
+	           environmentShader: EnvironmentShader,
 	           previousColor: Color,
 	           maximumRayDepth: Int) -> Color
 	{
@@ -842,7 +913,7 @@ class MixShader: Shader
 		                                  point: point,
 		                                  rayDirection: rayDirection,
 		                                  sceneGeometry: sceneGeometry,
-		                                  ambientColor: ambientColor,
+		                                  environmentShader: environmentShader,
 		                                  previousColor: previousColor,
 		                                  maximumRayDepth: maximumRayDepth)
 		
@@ -851,7 +922,7 @@ class MixShader: Shader
 		                                  point: point,
 		                                  rayDirection: rayDirection,
 		                                  sceneGeometry: sceneGeometry,
-		                                  ambientColor: ambientColor,
+		                                  environmentShader: environmentShader,
 		                                  previousColor: previousColor,
 		                                  maximumRayDepth: maximumRayDepth)
 		
@@ -867,5 +938,35 @@ extension MixShader: CustomStringConvertible
 		let shader1Description = "\(shader1)".replacingOccurrences(of: "\n", with: "\n\t")
 		let shader2Description = "\(shader2)".replacingOccurrences(of: "\n", with: "\n\t")
 		return "MixShader (mix: \(balance)):\n(\n\t\(shader1Description)\n\t\(shader2Description)\n)"
+	}
+}
+
+class EnvironmentShader
+{
+	var color: Color
+	var texture: Texture?
+	var strength: Float
+	
+	init(color: Color, texture: Texture? = nil, strength: Float = 1.0)
+	{
+		self.color = color
+		self.texture = texture
+		self.strength = strength
+	}
+	
+	func environmentColor(`for` rayDirection: Vector3D) -> Color
+	{
+		if let texture = self.texture
+		{
+			let longitude = atanf(rayDirection.y / rayDirection.x) + (rayDirection.x < 0 ? Float.pi : 0)
+			let latitude = asinf(rayDirection.z)
+			let u = longitude / Float.pi * 0.5
+			let v = latitude / Float.pi + 0.5
+			return texture.color(for: TextureCoordinate(u: u, v: v), atAngle: 1.5707963268) * strength
+		}
+		else
+		{
+			return color * strength
+		}
 	}
 }
