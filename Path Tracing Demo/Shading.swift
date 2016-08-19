@@ -25,6 +25,15 @@
 
 import Foundation
 
+@inline(__always)
+private func random_normal() -> Float
+{
+	let u1 = Float(drand48())
+	let u2 = Float(drand48())
+	let f1 = sqrtf(-2 * logf(u1))
+	let f2 = 2 * Float.pi * u2
+	return f1 * cosf(f2)
+}
 
 struct Color
 {
@@ -473,17 +482,11 @@ class ReflectionShader: Shader
 		}
 		
 		var outgoingRayDirection = (toCamera - 2 * (toCamera - (normal * toCamera) * normal)).normalized
-		
 		if roughness != 0.0
 		{
-			//inverse of the sigmoid function scaled by the roughness factor
-			let roughnessFactor = roughness * roughness
-			let randomizedOutgoingRayDirection = Vector3D(x: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
-			                                              y: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
-			                                              z: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0)) * roughnessFactor
+			outgoingRayDirection = outgoingRayDirection.rotated(alpha: roughness * random_normal(), beta: roughness * random_normal(), gamma: roughness * random_normal())
 			
-			outgoingRayDirection = (randomizedOutgoingRayDirection + outgoingRayDirection).normalized
-			if outgoingRayDirection * normal < 0
+			if (outgoingRayDirection * normal) * (rayDirection * normal) > 0
 			{
 				outgoingRayDirection = -outgoingRayDirection
 			}
@@ -608,14 +611,9 @@ class RefractionShader: Shader
 		{
 			if roughness != 0.0
 			{
-				//let roughnessFactor = roughness * abs(cos(transmissionRayDirection ∠ normal))
-				let roughnessFactor = roughness * roughness
-				let randomizedOutgoingRayDirection = Vector3D(x: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
-				                                              y: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
-				                                              z: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0)) * roughnessFactor
+				transmissionRayDirection = transmissionRayDirection.rotated(alpha: roughness * random_normal(), beta: roughness * random_normal(), gamma: roughness * random_normal())
 				
-				transmissionRayDirection = (randomizedOutgoingRayDirection + transmissionRayDirection).normalized
-				if transmissionRayDirection * normal > 0
+				if (transmissionRayDirection * normal) * (rayDirection * normal) < 0
 				{
 					transmissionRayDirection = -transmissionRayDirection
 				}
@@ -639,13 +637,9 @@ class RefractionShader: Shader
 			
 			if roughness != 0.0
 			{
-				let roughnessFactor = roughness * roughness
-				let randomizedOutgoingRayDirection = Vector3D(x: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
-				                                              y: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0),
-				                                              z: -logf(1.0 / nextafterf(Float(drand48()), 0.5) - 1.0)) * roughnessFactor
+				reflectionRayDirection = reflectionRayDirection.rotated(alpha: roughness * random_normal(), beta: roughness * random_normal(), gamma: roughness * random_normal())
 				
-				reflectionRayDirection = (randomizedOutgoingRayDirection + reflectionRayDirection).normalized
-				if reflectionRayDirection * normal < 0
+				if (reflectionRayDirection * normal) * (rayDirection * normal) > 0
 				{
 					reflectionRayDirection = -reflectionRayDirection
 				}

@@ -42,6 +42,31 @@ struct Vector3D
 	{
 		return self * (1 / abs)
 	}
+	
+	@inline(__always)
+	func rotated(alpha: Float, beta: Float, gamma: Float) -> Vector3D
+	{
+		let sinAlpha = sinf(alpha)
+		let cosAlpha = cosf(alpha)
+		let sinBeta = sinf(beta)
+		let cosBeta = cosf(beta)
+		let sinGamma = sinf(gamma)
+		let cosGamma = cosf(gamma)
+		
+		let xx = self.x * cosAlpha * cosBeta
+		let yx = self.y * (cosAlpha * sinBeta * sinGamma - sinAlpha * cosGamma)
+		let zx = self.z * (cosAlpha * sinBeta * cosGamma + sinAlpha * sinGamma)
+		
+		let xy = self.x * sinAlpha * cosBeta
+		let yy = self.y * (sinAlpha * sinBeta * sinGamma + cosAlpha * cosGamma)
+		let zy = self.z * (sinAlpha * sinBeta * cosGamma - cosAlpha * sinGamma)
+		
+		let xz = self.x * -sinBeta
+		let yz = self.y * cosBeta * sinGamma
+		let zz = self.z * cosBeta * cosGamma
+		
+		return Vector3D(x: xx + yx + zx, y: xy + yy + zy, z: xz + yz + zz)
+	}
 }
 
 extension Vector3D : CustomStringConvertible
@@ -160,7 +185,7 @@ struct Ray3D
 			- cSubA.x * bSubA.y * right.z
 		
 		let rayParameter = det3 / det
-		guard rayParameter > 0 else { return nil }
+		guard rayParameter >= 0 else { return nil }
 		
 		return (rayParameter: rayParameter,
 		        barycentric: BarycentricPoint(

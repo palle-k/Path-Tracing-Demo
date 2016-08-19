@@ -17,9 +17,10 @@
 
 ### Other Features
 - Depth of Field
+- Image based lighting
+- Texturing
 - Wavefront .obj import
 - Save materials
-- Texturing
 
 ## License
 

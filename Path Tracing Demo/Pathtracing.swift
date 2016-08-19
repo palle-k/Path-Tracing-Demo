@@ -394,6 +394,7 @@ private class LocalPathTracingWorker
 				if self.shouldStop
 				{
 					self.shouldStop = false
+					self.idle = true
 					return
 				}
 				if CACurrentMediaTime() - lastReportTime >= 2.0
