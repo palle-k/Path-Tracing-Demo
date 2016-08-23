@@ -480,7 +480,7 @@ fileprivate class OctreeNode : OctreeNodeType
 			distinctPoints[i] = distinct
 		}
 		
-		let innerNodeThreshold = 8
+		let innerNodeThreshold = 4
 		
 		if distinctPoints[0] && lllBucket.count > innerNodeThreshold && lllBucket.count < triangles.count
 		{
