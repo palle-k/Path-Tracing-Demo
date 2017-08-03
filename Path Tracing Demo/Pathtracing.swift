@@ -69,6 +69,8 @@ class PathTracer : PathTracingWorkerDelegate
 	private var width: Int = 0
 	private var startTime: Double = 0
 	
+	var useLogarithmicColor: Bool = false
+	
 	init(withScene scene: Scene3D)
 	{
 		self.scene = scene
@@ -170,7 +172,7 @@ class PathTracer : PathTracingWorkerDelegate
 		}
 	}
 	
-	fileprivate final func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
+	fileprivate final func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [Color])
 	{
 		managerQueue.async
 		{
@@ -188,16 +190,21 @@ class PathTracer : PathTracingWorkerDelegate
 				width: region.size.width,
 				height: region.size.height)
 			
-			var mutableResult = result
+			var mutableResult: [Float]
+			if self.useLogarithmicColor {
+				mutableResult = result.map{$0.toLogColor()}.flatMap{[$0.red, $0.green, $0.blue, $0.alpha]}
+			} else {
+				mutableResult = result.flatMap{[$0.red, $0.green, $0.blue, $0.alpha]}
+			}
 			
 			let ctx = CGContext(
 				data: &mutableResult,
 				width: region.size.width,
 				height: region.size.height,
-				bitsPerComponent: 16,
-				bytesPerRow: region.size.width * 4 * 2,
+				bitsPerComponent: 32,
+				bytesPerRow: region.size.width * 4 * 4,
 				space: CGColorSpaceCreateDeviceRGB(),
-				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+				bitmapInfo: CGBitmapInfo.floatComponents.rawValue | CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue)
 			guard let regionImage = ctx?.makeImage() else { fatalError("Image could not be created") }
 			
 			self.context.draw(regionImage, in: rect)
@@ -226,20 +233,25 @@ class PathTracer : PathTracingWorkerDelegate
 		}
 	}
 	
-	fileprivate func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
+	fileprivate func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [Color])
 	{
 		managerQueue.async
 		{
-			var mutableResult = result
+			var mutableResult: [Float]
+			if self.useLogarithmicColor {
+				mutableResult = result.map{$0.toLogColor()}.flatMap{[$0.red, $0.green, $0.blue, $0.alpha]}
+			} else {
+				mutableResult = result.flatMap{[$0.red, $0.green, $0.blue, $0.alpha]}
+			}
 			
 			let ctx = CGContext(
 				data: &mutableResult,
 				width: region.size.width,
 				height: region.size.height,
-				bitsPerComponent: 16,
-				bytesPerRow: region.size.width * 4 * 2,
+				bitsPerComponent: 32,
+				bytesPerRow: region.size.width * 4 * 4,
 				space: CGColorSpaceCreateDeviceRGB(),
-				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+				bitmapInfo: CGBitmapInfo.floatComponents.rawValue | CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue)
 			guard let regionImage = ctx?.makeImage() else { fatalError("Image could not be created") }
 			
 			let rect = CGRect(
@@ -320,7 +332,7 @@ private class LocalPathTracingWorker
 		{
 			var lastReportTime = CACurrentMediaTime()
 			
-			var data = [UInt16](repeating: 0, count: region.size.width * region.size.height * 4)
+			var data = [Color](repeating: Color.black(), count: region.size.width * region.size.height)
 			let horizontalScaleFactor = 1.0 / Float(self.totalSize.height) * Float(self.totalSize.width)
 			
 			let fovScalingFactor = tanf(self.camera.fieldOfView * 0.5)
@@ -331,12 +343,10 @@ private class LocalPathTracingWorker
 			{
 				for x in region.location.x ..< (region.location.x + region.size.width)
 				{
-					let index = ((y - region.location.y) * region.size.width + (x - region.location.x)) * 4
-					
 					var color:Color = .black()
 					for _ in 0 ..< self.samples
 					{
-						let angle = Float(drand48()) * 2.0 * Float(M_PI)
+						let angle = Float(drand48()) * 2.0 * Float.pi
 						let radius = sqrtf(Float(drand48()))
 						
 						let baseOffsetX = (cosf(angle) * radius) * self.camera.apertureSize
@@ -382,14 +392,10 @@ private class LocalPathTracingWorker
 							color.alpha += sampleColor.alpha
 						}
 					}
+					let index = ((y - region.location.y) * region.size.width + (x - region.location.x))
 					
 					//TODO: Implement Alpha blending
-					color = color * (1.0 / Float(self.samples))
-					
-					data[index]     = color.red16.bigEndian
-					data[index + 1] = color.green16.bigEndian
-					data[index + 2] = color.blue16.bigEndian
-					data[index + 3] = UInt16.max.bigEndian
+					data[index] = (color * (1.0 / Float(self.samples)))
 				}
 				if self.shouldStop
 				{
@@ -417,6 +423,6 @@ private class LocalPathTracingWorker
 
 private protocol PathTracingWorkerDelegate : class
 {
-	func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
-	func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [UInt16])
+	func worker(worker: LocalPathTracingWorker, didFinish region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [Color])
+	func worker(worker: LocalPathTracingWorker, didPerformUpdateOf region: (location: (x: Int, y: Int), size: (width: Int, height: Int)), result: [Color])
 }

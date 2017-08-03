@@ -235,7 +235,7 @@ private protocol OctreeNodeType
 extension OctreeNodeType
 {
 	@inline(__always)
-	fileprivate nonmutating final func intersects(ray: Ray3D, betterThan bestIntersection: Float? = nil) -> Bool
+	fileprivate nonmutating func intersects(ray: Ray3D, betterThan bestIntersection: Float? = nil) -> Bool
 	{
 		let baseBFL = Point3D(x: volume.x, y: volume.y, z: volume.z)
 		let baseTBR = baseBFL + Vector3D(x: volume.width, y: volume.height, z: volume.depth)

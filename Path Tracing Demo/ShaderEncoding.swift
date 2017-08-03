@@ -56,7 +56,8 @@ class ImageTextureEncoder: NSObject, TextureEncoder, TextureDecoder
 		var length: Int = 0
 		guard let pixelData = aDecoder.decodeBytes(forKey: "pixel_data", returnedLength: &length) else { fatalError("pixel data could not be decoded") }
 		guard width * height * 4 == length else { return nil }
-		let pixelDataArray = (0..<length).map(pixelData.advanced).map{$0.pointee}
+		
+		let pixelDataArray = (0..<length).map(pixelData.advanced).map{$0.pointee}.map{Float($0)}
 		texture = ImageTexture(with: pixelDataArray, width: width, height: height)
 	}
 	
@@ -64,7 +65,7 @@ class ImageTextureEncoder: NSObject, TextureEncoder, TextureDecoder
 	{
 		aCoder.encode(texture.width, forKey: "width")
 		aCoder.encode(texture.height, forKey: "height")
-		aCoder.encodeBytes(texture.pixelData, length: texture.width * texture.height * 4, forKey: "pixel_data")
+		aCoder.encodeBytes(texture.pixelData.map{UInt8($0)}, length: texture.width * texture.height * 4, forKey: "pixel_data")
 	}
 	
 	var decoded: Texture

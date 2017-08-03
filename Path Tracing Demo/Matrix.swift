@@ -75,11 +75,6 @@ struct Matrix
 	
 	init(rows:[[Float]])
 	{
-//		guard rows.count > 0 && (rows.map{$0.count == rows[0].count}.reduce(true){$0 && $1})
-//			else
-//		{
-//			fatalError("Matrix must be at least 1x1 and all rows must be of equal size")
-//		}
 		self.rows = rows
 	}
 	
@@ -143,26 +138,6 @@ struct Matrix
 		self.rows = (zRot * yRot * xRot).rows
 	}
 	
-//	mutating func swapRow(_ row: Int, with otherRow: Int)
-//	{
-//		(rows[row], rows[otherRow]) = (rows[otherRow], rows[row])
-//	}
-//	
-//	mutating func addRow(_ row: Int, to target: Int, withFactor factor: Float = 1.0)
-//	{
-//		//rows[target] = rows[target].enumerated().map{$1+self.rows[row][$0]*factor}
-//		var result = rows[target]
-//		vDSP_vsma(rows[row], 1, [factor], result, 1, &result, 1, vDSP_Length(rows[target].count))
-//		rows[target] = result
-//	}
-//	
-//	mutating func multiplyRow(_ row: Int, with factor: Float)
-//	{
-//		//rows[row] = rows[row].map{$0*factor}
-//		var result = rows[row]
-//		vDSP_vsmul(result, 1, [factor], &result, 1, vDSP_Length(rows[row].count))
-//		rows[row] = result
-//	}
 	
 	func solve3x3() -> (x: Float, y: Float, z: Float)?
 	{
@@ -282,4 +257,29 @@ func * (left: Matrix, right: Vector3D) -> Vector3D
 		return result
 	}
 	fatalError("Incompatible matrix size.")
+}
+
+extension Matrix
+{
+	
+//	mutating func swapRow(_ row: Int, with otherRow: Int)
+//	{
+//		(rows[row], rows[otherRow]) = (rows[otherRow], rows[row])
+//	}
+//
+//	mutating func addRow(_ row: Int, to target: Int, withFactor factor: Float = 1.0)
+//	{
+//		//rows[target] = rows[target].enumerated().map{$1+self.rows[row][$0]*factor}
+//		var result = rows[target]
+//		vDSP_vsma(rows[row], 1, [factor], result, 1, &result, 1, vDSP_Length(rows[target].count))
+//		rows[target] = result
+//	}
+//
+//	mutating func multiplyRow(_ row: Int, with factor: Float)
+//	{
+//		//rows[row] = rows[row].map{$0*factor}
+//		var result = rows[row]
+//		vDSP_vsmul(result, 1, [factor], &result, 1, vDSP_Length(rows[row].count))
+//		rows[row] = result
+//	}
 }

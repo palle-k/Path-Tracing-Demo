@@ -96,7 +96,7 @@ extension CheckerboardTexture: CustomStringConvertible
 
 class ImageTexture: Texture
 {
-	var pixelData: [UInt8]
+	var pixelData: [Float]
 	var width: Int
 	var height: Int
 	
@@ -105,23 +105,24 @@ class ImageTexture: Texture
 		self.width = image.width
 		self.height = image.height
 		
-		pixelData = [UInt8](repeating: 0, count: width * height * 4)
+		pixelData = [Float](repeating: 0, count: width * height * 4)
 		guard let ctx = CGContext(
 			data: &pixelData,
 			width: width,
 			height: height,
-			bitsPerComponent: 8,
-			bytesPerRow: width * 4,
+			bitsPerComponent: 32,
+			bytesPerRow: width * 4 * 4,
 			space: CGColorSpaceCreateDeviceRGB(),
-			bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+			bitmapInfo: CGBitmapInfo.floatComponents.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
 		else
 		{
 			return nil
 		}
 		ctx.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+		print("Max: \(pixelData.max() ?? 0), min: \(pixelData.min() ?? 0)")
 	}
 	
-	init(with data: [UInt8], width: Int, height: Int)
+	init(with data: [Float], width: Int, height: Int)
 	{
 		self.pixelData = data
 		self.width = width

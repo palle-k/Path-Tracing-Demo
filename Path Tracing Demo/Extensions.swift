@@ -70,7 +70,7 @@ extension Array where Element: Comparable
 	}
 }
 
-extension Array where Element: Equatable, Element: Hashable
+extension Array where Element: Hashable
 {
 	func distinct() -> [Element]
 	{

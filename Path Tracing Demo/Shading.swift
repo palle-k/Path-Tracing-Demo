@@ -151,15 +151,29 @@ struct Color
 		return Color(withRed: self.red / self.alpha, green: self.green / self.alpha, blue: self.blue / self.alpha, alpha: self.alpha)
 	}
 	
+	func toLogColor(width: Float = 100, gain: Float = 1.0 / 7.0, offset: Float = 0) -> Color {
+		func toLog(_ value: Float) -> Float {
+			return log(value * width + 1) * gain + offset
+		}
+		return Color(withRed: toLog(red), green: toLog(green), blue: toLog(blue), alpha: alpha)
+	}
+	
+	func toLinearColor(width: Float = 100, gain: Float = 1.0 / 7.0, offset: Float = 0) -> Color {
+		func toLinear(_ value: Float) -> Float {
+			return (exp((value - offset) / gain) - 1) / width
+		}
+		return Color(withRed: toLinear(red), green: toLinear(green), blue: toLinear(blue), alpha: alpha)
+	}
+	
 	var brightness: Float
 	{
 		return sqrt(red * red + green * green + blue * blue) * 0.577350269
 	}
 	
-	var clamped: Color
-	{
-		return Color(withRed: max(min(red, 1.0), 0.0), green: max(min(green, 1.0), 0.0), blue: max(min(blue, 1.0), 0.0), alpha: max(min(alpha, 1.0), 0.0))
-	}
+//	var clamped: Color
+//	{
+//		return Color(withRed: max(min(red, 1.0), 0.0), green: max(min(green, 1.0), 0.0), blue: max(min(blue, 1.0), 0.0), alpha: max(min(alpha, 1.0), 0.0))
+//	}
 	
 	init(withRed red: Float, green: Float, blue: Float, alpha: Float)
 	{
@@ -279,7 +293,7 @@ protocol Shader: class
 
 extension Shader
 {
-	func textureColor(forTriangle triangle: Triangle3D, withIntersectionCoordinates intersectionCoordinates: BarycentricPoint, atAngle angle: Float = Float(M_PI_2)) -> Color
+	func textureColor(forTriangle triangle: Triangle3D, withIntersectionCoordinates intersectionCoordinates: BarycentricPoint, atAngle angle: Float = Float.pi) -> Color
 	{
 		let color:Color
 		if let texture = self.texture
