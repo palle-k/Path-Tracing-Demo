@@ -16,11 +16,11 @@
 - Depth attenuation
 
 ### Other Features
-- Depth of Field
+- Physically accurate depth of field
 - Image based lighting
 - Texturing
 - Wavefront .obj import
-- Save materials
+- HDR textures and render targets
 
 ## License
 
