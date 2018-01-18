@@ -130,7 +130,7 @@ class ShaderChooserViewController: NSViewController
 		childViewControllers.forEach{$0.removeFromParentViewController()}
 		let identifier = shaderVCNames[shaderChooser.indexOfSelectedItem]
 		
-		guard let shaderEditorViewController = self.storyboard?.instantiateController(withIdentifier: identifier) as? ShaderEditorViewController
+		guard let shaderEditorViewController = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(identifier)) as? ShaderEditorViewController
 		else
 		{
 			fatalError("Shader ViewController cannot be instantiated or does not have matching type.")

@@ -65,5 +65,5 @@ class UnifiedTitleBarWindowController: NSWindowController
 
 var ApplicationDelegate: AppDelegate
 {
-	return NSApplication.shared().delegate! as! AppDelegate
+	return NSApplication.shared.delegate! as! AppDelegate
 }

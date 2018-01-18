@@ -46,7 +46,7 @@ class MaterialEditorViewController: NSViewController
 		childViewControllers.flatMap{$0 as? ShaderChooserViewController}.forEach{$0.delegate = self}
 	}
 	
-	func reload(notification: NSNotification?)
+	@objc func reload(notification: NSNotification?)
 	{
 		materials = ApplicationDelegate.scene?.objects.flatMap{$0.materials}.distinct().sorted{$0.name < $1.name} ?? []
 		self.materialList.reloadData()
@@ -65,11 +65,11 @@ extension MaterialEditorViewController: NSTableViewDelegate
 {
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?
 	{
-		var cell = tableView.make(withIdentifier: "MaterialCell", owner: self)
+		var cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MaterialCell"), owner: self)
 		if cell == nil
 		{
 			cell = NSTextField(frame: NSRect(x: 0, y: 0, width: tableView.frame.width, height: 27))
-			cell?.identifier = "MaterialCell"
+			cell?.identifier = NSUserInterfaceItemIdentifier("MaterialCell")
 			if let textCell = cell as? NSTextField
 			{
 				textCell.isEditable = false

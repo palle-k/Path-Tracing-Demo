@@ -107,7 +107,7 @@ class ColorTextureChooserViewController: NSViewController
 			openPanel.canChooseFiles = true
 			openPanel.canChooseDirectories = false
 			openPanel.allowsMultipleSelection = false
-			guard openPanel.runModal() == NSFileHandlingPanelOKButton else { break }
+			guard openPanel.runModal() == .OK else { break }
 			guard let url = openPanel.url else { break }
 			guard let imageTexture = ImageTexture(contentsOf: url) else { break }
 			texture = imageTexture

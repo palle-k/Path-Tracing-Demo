@@ -91,7 +91,7 @@
 		E64D25411D4D98EE00445C30 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		E658AC511D5DCD2100701C31 /* ShaderEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderEncoding.swift; sourceTree = "<group>"; };
 		E658AC551D5DED0300701C31 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		E658FB731D4B879300C7628D /* PathTracingTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PathTracingTests.app; path = "Path Tracing Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E658FB731D4B879300C7628D /* Path Tracing Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Path Tracing Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E658FB761D4B879300C7628D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E658FB781D4B879300C7628D /* RenderResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderResultViewController.swift; sourceTree = "<group>"; };
 		E658FB7A1D4B879300C7628D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 		E658FB741D4B879300C7628D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E658FB731D4B879300C7628D /* PathTracingTests.app */,
+				E658FB731D4B879300C7628D /* Path Tracing Demo.app */,
 				E64D25351D4D8C6000445C30 /* PathTracingTestsTests.xctest */,
 				E664E3851D52FF1D0032AACA /* PathTracing.app */,
 			);
@@ -270,7 +270,7 @@
 			);
 			name = "Path Tracing Demo";
 			productName = PathTracingTests;
-			productReference = E658FB731D4B879300C7628D /* PathTracingTests.app */;
+			productReference = E658FB731D4B879300C7628D /* Path Tracing Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E664E3841D52FF1D0032AACA /* PathTracing */ = {
@@ -480,7 +480,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracingTestsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PathTracingTests.app/Contents/MacOS/PathTracingTests";
 			};
 			name = Debug;
@@ -494,7 +494,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracingTestsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PathTracingTests.app/Contents/MacOS/PathTracingTests";
 			};
 			name = Release;
@@ -620,7 +620,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -640,7 +640,7 @@
 				LLVM_LTO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.palleklewitz.PathTracingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

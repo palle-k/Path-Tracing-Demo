@@ -96,7 +96,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		openPanel.canChooseDirectories = false
 		openPanel.canChooseFiles = true
 		
-		guard openPanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard openPanel.runModal() == .OK else { return }
 		guard let url = openPanel.url else { return }
 		
 		piSceneImportProgress.isHidden = false
@@ -157,7 +157,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 	{
 		guard let scene = ApplicationDelegate.scene else { return }
 		let savePanel = NSSavePanel()
-		guard savePanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard savePanel.runModal() == .OK else { return }
 		guard let url = savePanel.url else { return }
 		DispatchQueue.global().async
 		{
@@ -185,7 +185,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		guard let image = ApplicationDelegate.pathTracer?.result else { return }
 		let savePanel = NSSavePanel()
 		savePanel.allowedFileTypes = ["public.png"]
-		guard savePanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard savePanel.runModal() == .OK else { return }
 		guard let url = savePanel.url else { return }
 		
 		DispatchQueue.global().async
@@ -252,7 +252,7 @@ class ControlPanelViewController: NSViewController, WavefrontModelImporterMateri
 		openPanel.canChooseFiles = true
 		openPanel.canChooseDirectories = false
 		openPanel.allowsMultipleSelection = false
-		guard openPanel.runModal() == NSFileHandlingPanelOKButton else { return }
+		guard openPanel.runModal() == .OK else { return }
 		guard let url = openPanel.url else { return }
 		guard let imageTexture = ImageTexture(contentsOf: url) else { return }
 		ApplicationDelegate.scene?.environmentShader.texture = imageTexture

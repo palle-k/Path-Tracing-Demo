@@ -48,7 +48,7 @@ class DefaultShaderEditorViewController: ShaderEditorViewController, ColorTextur
 		super.init(coder: coder)
 	}
 	
-	override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+	override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?)
 	{
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
@@ -82,7 +82,7 @@ class DiffuseShaderEditorViewController: ShaderEditorViewController, ColorTextur
 		super.init(coder: coder)
 	}
 	
-	override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+	override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?)
 	{
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
@@ -125,7 +125,7 @@ class EmissionShaderEditorViewController: ShaderEditorViewController, ColorTextu
 		super.init(coder: coder)
 	}
 	
-	override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+	override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?)
 	{
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
@@ -179,7 +179,7 @@ class ReflectionShaderEditorViewController: ShaderEditorViewController, ColorTex
 		super.init(coder: coder)
 	}
 	
-	override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+	override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?)
 	{
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
@@ -247,7 +247,7 @@ class RefractionShaderEditorViewController: ShaderEditorViewController, ColorTex
 		super.init(coder: coder)
 	}
 	
-	override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+	override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?)
 	{
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}

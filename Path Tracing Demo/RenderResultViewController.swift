@@ -47,7 +47,7 @@ class RenderResultViewController: NSViewController, PathTracerDelegate
 		self.view.window?.title = "Path Tracing Demo - \(Int(progress * 100))% completed."
 	}
 	
-	func pathTracerUpdated(notification: NSNotification?)
+	@objc func pathTracerUpdated(notification: NSNotification?)
 	{
 		ApplicationDelegate.pathTracer?.delegate = self
 	}
